@@ -4,16 +4,16 @@ layout: default
 <main id="site-main" class="site-main">
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">{{ page.title }}</h1>
-      {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
+      <h1 class="post-title text-purple-darkest">{{ page.title }}</h1>
+      {% if page.subtitle %}<p class="post-subtitle text-purple-darkest">{{ page.subtitle }}</p>{% endif %}
       <p class="post-meta">
-        <time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        {% if page.author %}<span class="post-author text-purple-dark">{{ page.author }}</span>{% endif %}
+        <time class="post-date text-pink-light italic" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %-d, %Y" }}</time>
         {% if page.category %} • <a href="{{ '/' | relative_url }}{{ page.category | downcase }}/">{{ page.category }}</a>{% endif %}
-        {% if page.author %} • {{ page.author }}{% endif %}
       </p>
       {% if page.cover %}
-      <figure class="post-feature">
-        <img src="{{ page.cover | relative_url }}" alt="{{ page.title }}" />
+      <figure class="post-feature img-frame img-rect-m">
+        <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }}" />
       </figure>
       {% endif %}
     </header>

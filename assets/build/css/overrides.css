@@ -14,6 +14,69 @@
 	}
 }
 
+/* Reviews/Podcasts listing: desktop rows + mobile cards */
+.reviews-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Desktop row style */
+@media (min-width: 768px) {
+	.review-row {
+		display: block;
+		text-decoration: none;
+		background: var(--color-background-offwhite, #faf8f5);
+		box-shadow: 0 2px 6px rgba(101,79,132,0.12);
+		transition: transform 520ms ease, box-shadow 520ms ease;
+	}
+	.review-row:hover,
+	.review-row:focus-visible {
+		transform: translateY(-2px) scale(1.015);
+		box-shadow: 0 8px 22px rgba(101,79,132,0.18);
+	}
+	.review-row-inner {
+		padding: 14px 16px 16px;
+	}
+	.review-row-title { font-size: 1.05rem; color: var(--color-purple-darkest, #654f84); margin: 0 0 2px; }
+	.review-row-sub { color: var(--color-purple-dark, #a295b5); margin: 0 0 4px; }
+	.review-row-meta { font-size: 0.9rem; color: var(--color-purple-dark, #a295b5); display: flex; gap: 10px; margin-bottom: 4px; }
+	.review-row-excerpt { color: #3f3652; opacity: 0.9; }
+}
+
+/* Mobile card vibe: overlap like homepage, show newest card and next headline peeking */
+@media (max-width: 767px) {
+	.review-row { display: block; text-decoration: none; }
+	.review-row.card-frame { margin-bottom: -8px; }
+	.reviews-list .review-row:nth-child(2) .review-row-inner { padding-top: 8px; }
+	/* Ensure only first card is full; others are compact */
+	.reviews-list .review-row:nth-child(1) .review-row-inner { padding: 14px 16px 16px; }
+	.reviews-list .review-row:nth-child(n+2) .review-row-inner { padding: 8px 16px; }
+	.reviews-list .review-row:nth-child(n+2) .review-row-sub, 
+	.reviews-list .review-row:nth-child(n+2) .review-row-excerpt { display: none; }
+	.reviews-list .review-row:nth-child(n+2) .review-row-meta { font-size: 0.85rem; opacity: 0.85; }
+}
+
+/* Entry header typography refinements */
+.post-header .post-title { margin: 0 0 4px; }
+.post-header .post-subtitle { margin: 0 0 6px; }
+.post-header .post-meta { margin: 0 0 12px; display: flex; gap: 10px; align-items: baseline; }
+.post-header .post-author { font-family: Helvetica, Arial, ui-sans-serif, system-ui; }
+.post-header .post-date { font-family: Helvetica, Arial, ui-sans-serif, system-ui; }
+
+/* Footer social: horizontal with brand tint */
+.site-footer .social-links {
+	display: flex;
+	gap: 14px;
+	margin-top: 6px;
+	color: var(--color-purple-darkest, #654f84);
+}
+.site-footer .social-links a:hover,
+.site-footer .social-links a:focus-visible {
+	color: var(--color-pink-light, #e8c3d6);
+	transition: color 160ms ease;
+}
+
 /* Image frames: small/medium/large, rectangle and square
    - Adaptive to portrait/landscape via object-fit: contain
    - Chamfered corners (light angle), straight edges in purple, chamfers accented pink

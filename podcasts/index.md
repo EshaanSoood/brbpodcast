@@ -7,24 +7,27 @@ permalink: /podcasts/
   <header class="tag-header">
     <h1 class="tag-title">Podcasts</h1>
   </header>
-  <div class="post-list">
-    {% assign sorted = site.podcasts | sort: 'date' | reverse %}
-    {% for item in sorted %}
-      <article class="post-card">
-        {% if item.cover %}
-        <a class="post-card-media" href="{{ item.url | relative_url }}">
-          <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" />
-        </a>
-        {% endif %}
-        <div class="post-card-content">
-          <h2 class="post-card-title"><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h2>
-          <div class="post-card-meta">
-            <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%B %-d, %Y' }}</time>
+  {% assign all = site.podcasts | sort: 'date' | reverse %}
+  {% assign total = all | size %}
+  <div class="reviews-list">
+    {% for item in all limit:10 %}
+      <a class="review-row card-frame" href="{{ item.url | relative_url }}">
+        <div class="review-row-inner">
+          <h2 class="review-row-title">{{ item.title }}</h2>
+          {% if item.subtitle %}<p class="review-row-sub">{{ item.subtitle }}</p>{% endif %}
+          <div class="review-row-meta">
+            {% if item.author %}<span class="review-row-author">{{ item.author }}</span>{% endif %}
+            <time class="review-row-date" datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%B %-d, %Y' }}</time>
           </div>
-          {% if item.excerpt %}<p class="post-card-excerpt">{{ item.excerpt }}</p>{% endif %}
+          <p class="review-row-excerpt">{{ item.excerpt | default: item.content | strip_html | truncatewords: 24 }}</p>
         </div>
-      </article>
+      </a>
     {% endfor %}
   </div>
+  {% if total > 10 %}
+  <nav class="pager">
+    <a class="pager-next" href="{{ '/podcasts/page/2/' | relative_url }}">Older podcasts →</a>
+  </nav>
+  {% endif %}
 </main>
 
