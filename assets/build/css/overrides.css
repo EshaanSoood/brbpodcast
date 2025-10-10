@@ -1,7 +1,9 @@
 /* Post grid: force 2 columns on md and up */
 @media (min-width: 768px) {
 	.post-list {
+		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+		gap: 20px; /* base gap, overlaps will visually cross this */
 	}
 }
 
@@ -44,6 +46,122 @@
 	);
 	/* Subtle dark purple drop shadow to feel like a cut-out */
 	box-shadow: 0 4px 10px rgba(101,79,132,0.10), 0 1px 3px rgba(101,79,132,0.14);
+}
+
+/* Homepage post cards: framed 4:5 tiles, full-card link, subtle overlap */
+.post-list {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 16px;
+}
+
+@media (min-width: 768px) {
+	.post-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.post-card.card-frame {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	background: var(--color-background-offwhite, #faf8f5);
+	/* subtle dark purple shadow */
+	box-shadow: 0 4px 10px rgba(101,79,132,0.10), 0 1px 3px rgba(101,79,132,0.14);
+	/* padding for text content */
+	padding: 14px 16px 16px;
+	/* create room for the chamfered border */
+	overflow: hidden;
+}
+
+/* 4:5 media region */
+.post-card.card-frame .card-media {
+	position: relative;
+	width: 100%;
+	/* 4:5 (W:H) → aspect-ratio: 4 / 5 */
+	aspect-ratio: 4 / 5;
+	margin-bottom: 12px;
+}
+
+.post-card.card-frame .card-media img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background: transparent;
+}
+
+/* Chamfered frame with chunky pink strokes on chamfered edges only */
+.post-card.card-frame::before,
+.post-card.card-frame::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	clip-path: polygon(
+		var(--c, 10px) 0%,
+		calc(100% - var(--c, 10px)) 0%,
+		100% var(--c, 10px),
+		100% calc(100% - var(--c, 10px)),
+		calc(100% - var(--c, 10px)) 100%,
+		var(--c, 10px) 100%,
+		0% calc(100% - var(--c, 10px)),
+		0% var(--c, 10px)
+	);
+}
+
+/* Straight edges (purple) using side gradients below the chamfers */
+.post-card.card-frame::before {
+	--b: 3px;
+	--edge: var(--color-purple-dark, #a295b5);
+	background:
+		linear-gradient(var(--edge), var(--edge)) top/100% var(--b) no-repeat,
+		linear-gradient(var(--edge), var(--edge)) bottom/100% var(--b) no-repeat,
+		linear-gradient(var(--edge), var(--edge)) left/var(--b) 100% no-repeat,
+		linear-gradient(var(--edge), var(--edge)) right/var(--b) 100% no-repeat;
+}
+
+/* Chunky chamfer accents (pink) only at the chamfered corners */
+.post-card.card-frame::after {
+	--b: 4px; /* chunky stroke */
+	--chamfer: var(--color-pink-light, #e8c3d6);
+	box-shadow:
+		inset var(--b) var(--b) 0 0 var(--chamfer),
+		inset calc(-1*var(--b)) calc(-1*var(--b)) 0 0 var(--chamfer);
+	opacity: 0.9;
+}
+
+/* Angle variants (skew the frame slightly). Keep assortment static */
+.card-angle-9  { --card-angle: -9deg;  transform: skewX(var(--card-angle)); }
+.card-angle-11 { --card-angle: -11deg; transform: skewX(var(--card-angle)); }
+.card-angle-13 { --card-angle: -13deg; transform: skewX(var(--card-angle)); }
+.card-angle-16 { --card-angle: -16deg; transform: skewX(var(--card-angle)); }
+
+/* Unskew inner content so text/media are readable */
+.post-card.card-frame .card-media,
+.post-card.card-frame .post-card-content { transform: skewX(calc(-1 * var(--card-angle, 0deg))); }
+
+/* Spacing for content */
+.post-card-title { margin: 6px 0 2px; }
+.post-card-meta { font-size: 0.9rem; opacity: 0.85; margin-bottom: 6px; }
+.post-card-excerpt { margin-top: 6px; }
+
+/* Subtle overlaps: right tile overlaps left; lower overlaps upper */
+@media (min-width: 768px) {
+	.post-list > .post-card { position: relative; }
+	.post-list > .post-card:nth-child(2n) { /* right column */
+		margin-left: -10px; /* subtle horizontal overlap */
+		z-index: 2;
+	}
+	.post-list > .post-card:nth-child(n+3) { /* second row and below */
+		margin-top: -12px; /* subtle vertical overlap */
+	}
+}
+
+/* Ensure overlaps remain subtle on mobile (single column) */
+@media (max-width: 767px) {
+	.post-list > .post-card { margin-left: 0; margin-top: 0; }
 }
 
 .img-frame::before {

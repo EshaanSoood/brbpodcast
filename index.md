@@ -17,22 +17,25 @@ title: Behind The Beat
     <div class="post-list">
       {% assign all = site.reviews | concat: site.podcasts %}
       {% assign sorted = all | sort: 'date' | reverse %}
+      {% assign angle_classes = "card-angle-9|card-angle-11|card-angle-13|card-angle-16|card-angle-13|card-angle-11" | split: "|" %}
       {% for item in sorted %}
-      <article class="post-card">
+      {% assign idx = forloop.index0 | modulo: angle_classes.size %}
+      {% assign angle_class = angle_classes[idx] %}
+      <a class="post-card card-frame {{ angle_class }}" href="{{ item.url | relative_url }}">
         {% if item.cover %}
-        <a class="post-card-media" href="{{ item.url | relative_url }}">
+        <div class="card-media">
           <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" />
-        </a>
+        </div>
         {% endif %}
         <div class="post-card-content">
-          <h2 class="post-card-title"><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h2>
+          <h2 class="post-card-title">{{ item.title }}</h2>
           <div class="post-card-meta">
             <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%B %-d, %Y' }}</time>
-            {% if item.category %}<span>•</span><a href="{{ '/' | relative_url }}{{ item.category | downcase }}/">{{ item.category }}</a>{% endif %}
+            {% if item.category %}<span>•</span><span class="post-card-category">{{ item.category }}</span>{% endif %}
           </div>
           {% if item.excerpt %}<p class="post-card-excerpt">{{ item.excerpt }}</p>{% endif %}
         </div>
-      </article>
+      </a>
       {% endfor %}
     </div>
   </section>
