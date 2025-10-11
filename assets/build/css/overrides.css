@@ -210,6 +210,33 @@
 .post-card-meta { font-size: 0.9rem; opacity: 0.85; margin-bottom: 6px; }
 .post-card-excerpt { margin-top: 6px; }
 
+/* Homepage specialized cards */
+@media (min-width: 768px) {
+  .card-review .card-inner { padding: 14px 16px 16px; }
+  .card-review .card-title { margin: 0 0 8px; color: var(--color-purple-darkest, #654f84); }
+  .card-review .card-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
+  .card-review .card-left { display: grid; grid-template-rows: 1fr auto; gap: 10px; }
+  .card-review .card-quote { color: #3f3652; opacity: 0.95; }
+  .card-review .card-actions .btn-trapezoid { display: inline-block; }
+  .card-review .card-right { display: flex; justify-content: center; }
+  .card-image.card-image-square { aspect-ratio: 1 / 1; width: 100%; max-width: 220px; display: flex; align-items: center; justify-content: center; }
+  .card-image.card-image-square img { width: 100%; height: 100%; object-fit: cover; }
+
+  .card-podcast .card-inner { padding: 14px 16px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
+  .card-podcast .card-left { display: grid; grid-template-rows: 2fr 2fr 1fr; gap: 8px; align-items: center; }
+  .card-podcast .card-title { margin: 0; color: var(--color-purple-darkest, #654f84); }
+  .card-podcast .card-sub { color: var(--color-purple-dark, #a295b5); margin: 0; }
+  .card-podcast .card-actions .btn-trapezoid { display: inline-block; }
+  .card-podcast .card-right { display: flex; justify-content: center; }
+  .card-image.card-image-portrait { aspect-ratio: 4 / 5; width: 100%; max-width: 240px; display: flex; align-items: center; justify-content: center; }
+  .card-image.card-image-portrait img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+@media (max-width: 767px) {
+  .card-review .card-right, .card-podcast .card-right { display: none; }
+  .card-review .card-inner, .card-podcast .card-inner { padding: 14px 16px 16px; }
+}
+
 /* Subtle overlaps: right tile overlaps left; lower overlaps upper */
 @media (min-width: 768px) {
 	.post-list > .post-card { position: relative; }

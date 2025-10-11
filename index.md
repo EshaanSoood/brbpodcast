@@ -21,21 +21,43 @@ title: Behind The Beat
       {% for item in sorted %}
       {% assign idx = forloop.index0 | modulo: angle_classes.size %}
       {% assign angle_class = angle_classes[idx] %}
-      <a class="post-card card-frame {{ angle_class }}" href="{{ item.url | relative_url }}">
-        {% if item.cover %}
-        <div class="card-media">
-          <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" />
-        </div>
-        {% endif %}
-        <div class="post-card-content">
-          <h2 class="post-card-title">{{ item.title }}</h2>
-          <div class="post-card-meta">
-            <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%B %-d, %Y' }}</time>
-            {% if item.category %}<span>•</span><span class="post-card-category">{{ item.category }}</span>{% endif %}
+      {% if item.collection == 'reviews' %}
+      <a class="post-card card-frame {{ angle_class }} card-review" href="{{ item.url | relative_url }}">
+        <div class="card-inner">
+          <h2 class="card-title">{{ item.title }}</h2>
+          <div class="card-bottom">
+            <div class="card-left">
+              <blockquote class="card-quote">{{ item.quote | default: item.excerpt | default: item.content | strip_html | truncatewords: 24 }}</blockquote>
+              <span class="card-actions"><span class="btn-trapezoid">Read More</span></span>
+            </div>
+            <div class="card-right">
+              {% if item.cover %}
+              <div class="card-image card-image-square">
+                <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" />
+              </div>
+              {% endif %}
+            </div>
           </div>
-          {% if item.excerpt %}<p class="post-card-excerpt">{{ item.excerpt }}</p>{% endif %}
         </div>
       </a>
+      {% else %}
+      <a class="post-card card-frame {{ angle_class }} card-podcast" href="{{ item.url | relative_url }}">
+        <div class="card-inner">
+          <div class="card-left">
+            <h2 class="card-title">{{ item.title }}</h2>
+            {% if item.subtitle %}<p class="card-sub">{{ item.subtitle }}</p>{% endif %}
+            <span class="card-actions"><span class="btn-trapezoid">Listen Now</span></span>
+          </div>
+          <div class="card-right">
+            {% if item.cover %}
+            <div class="card-image card-image-portrait">
+              <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" />
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+      {% endif %}
       {% endfor %}
     </div>
   </section>
