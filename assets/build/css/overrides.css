@@ -120,6 +120,14 @@
 	transition: color 160ms ease;
 }
 
+/* Fallbacks for nav CSS variables to avoid layout break if undefined */
+:root {
+	--nav-height: 60px;
+	--nav-mobile-height: 54px;
+	--nav-spacing: 24px;
+	--nav-spacing-mobile: 18px;
+}
+
 /* Mobile nav: ensure toggle is tappable and above decorative layers */
 .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 44px; padding: 0 12px; border: 2px solid var(--color-purple-dark, #a295b5); background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); border-radius: 6px; }
 .hamburger-btn:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 2px; }
