@@ -135,6 +135,9 @@
 .mobile-nav > nav { margin-top: 8px; }
 .logo-mobile { max-width: 56vw; height: auto; }
 
+/* Ensure clear focus for first/last nav items on mobile */
+.nav-col .nav-link:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 3px; border-radius: 6px; }
+
 /* Desktop hero sizing + subtle jagged bottom border */
 @media (min-width: 1024px) {
 	.site-main .hero {
