@@ -77,6 +77,29 @@
 	transition: color 160ms ease;
 }
 
+/* Desktop hero sizing + subtle jagged bottom border */
+@media (min-width: 1024px) {
+	.site-main .hero {
+		position: relative;
+		/* target ~3.5/9 of 16:9 viewport minus nav height */
+		min-height: calc(39vh - var(--nav-height));
+		padding-block: 20px; /* tighten large spacing */
+	}
+	.site-main .hero::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: var(--nav-height);
+		background-color: var(--color-pink-light, #e8c3d6);
+		/* create a subtle jagged/sawtooth edge using a mask */
+		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
+		mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
+		opacity: 0.85;
+	}
+}
+
 /* Image frames: small/medium/large, rectangle and square
    - Adaptive to portrait/landscape via object-fit: contain
    - Chamfered corners (light angle), straight edges in purple, chamfers accented pink
