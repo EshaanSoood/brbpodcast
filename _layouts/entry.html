@@ -4,6 +4,24 @@ layout: default
 <main id="site-main" class="site-main">
   <article class="post">
     <header class="post-header">
+      {% if page.collection == 'reviews' %}
+      <div class="review-header">
+        <div class="review-left">
+          <h1 class="post-title text-purple-darkest">{{ page.title }}</h1>
+          {% if page.author %}<p class="post-author-line"><em>by {{ page.author }}</em></p>{% endif %}
+          {% if page.pullquote %}
+          <blockquote class="pull-quote">{{ page.pullquote }}</blockquote>
+          {% endif %}
+        </div>
+        <div class="review-right">
+          {% if page.cover %}
+          <figure class="img-frame img-square-m review-cover">
+            <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" />
+          </figure>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
       <h1 class="post-title text-purple-darkest">{{ page.title }}</h1>
       {% if page.subtitle %}<p class="post-subtitle text-purple-darkest">{{ page.subtitle }}</p>{% endif %}
       <p class="post-meta">
@@ -16,10 +34,25 @@ layout: default
         <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }}" />
       </figure>
       {% endif %}
+      {% endif %}
     </header>
+    <div class="share-row" aria-label="Share this">
+      <a class="share-link share-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">FB</a>
+      <a class="share-link share-wa" href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20-%20{{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WA</a>
+      <a class="share-link share-ig" href="#" aria-label="Share on Instagram">IG</a>
+    </div>
+    {% if page.collection == 'reviews' and page.cover %}
+    <!-- Mobile cover placement: appears before body on small screens -->
+    <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
+      <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" />
+    </figure>
+    {% endif %}
     <section class="post-content">
       {{ content }}
     </section>
+    <div class="subscribe-cta">
+      <button type="button" class="btn-trapezoid btn-subscribe">Subscribe</button>
+    </div>
   </article>
 </main>
 

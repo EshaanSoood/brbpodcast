@@ -64,6 +64,49 @@
 .post-header .post-author { font-family: Helvetica, Arial, ui-sans-serif, system-ui; }
 .post-header .post-date { font-family: Helvetica, Arial, ui-sans-serif, system-ui; }
 
+/* Review header block (desktop): left text, right square cover centered */
+@media (min-width: 768px) {
+	.review-header { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: center; }
+	.review-left { display: grid; grid-template-rows: auto auto 1fr; gap: 8px; }
+	.post-author-line { font-family: Helvetica, Arial, ui-sans-serif, system-ui; color: var(--color-purple-dark, #a295b5); margin: 0; }
+	.pull-quote {
+		font-family: Helvetica, Arial, ui-sans-serif, system-ui;
+		font-weight: 700;
+		color: var(--color-purple-darkest, #654f84);
+		border-left: 4px solid var(--color-pink-light, #e8c3d6);
+		padding-left: 12px;
+		margin: 4px 0 0;
+	}
+	.review-right { display: flex; align-items: center; justify-content: center; }
+	.review-cover { margin: 0; }
+}
+
+/* Share row */
+.share-row { display: flex; gap: 10px; margin: 12px 0 16px; }
+.share-link { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 28px; border-radius: 6px; background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); font-weight: 700; font-size: 12px; }
+.share-link:hover, .share-link:focus-visible { background: var(--color-purple-dark, #a295b5); color: var(--color-background-offwhite, #faf8f5); }
+
+/* Subscribe CTA */
+.subscribe-cta { margin: 24px 0; }
+.btn-subscribe {
+	font-family: Helvetica, Arial, ui-sans-serif, system-ui;
+	font-weight: 700;
+	color: var(--color-purple-darkest, #654f84);
+	background: var(--color-pink-light, #e8c3d6);
+	padding: 10px 16px;
+	clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+	border: 2px solid #d989a8; /* dark pink edge */
+}
+.btn-subscribe:hover, .btn-subscribe:focus-visible { filter: brightness(0.97); }
+
+/* Mobile review order: move cover image before body, hide desktop cover */
+@media (max-width: 767px) {
+	.review-header .review-right { display: none; }
+	.review-cover-mobile { display: block; margin: 10px 0 12px; }
+}
+@media (min-width: 768px) {
+	.review-cover-mobile { display: none; }
+}
 /* Footer social: horizontal with brand tint */
 .site-footer .social-links {
 	display: flex;
@@ -96,6 +139,27 @@
 		/* create a subtle jagged/sawtooth edge using a mask */
 		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
 		mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
+		opacity: 0.85;
+	}
+}
+
+/* Mobile hero: proportionally smaller height and border matching mobile nav */
+@media (max-width: 767px) {
+	.site-main .hero {
+		position: relative;
+		min-height: calc(34vh - var(--nav-mobile-height));
+		padding-block: 14px;
+	}
+	.site-main .hero::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: var(--nav-mobile-height);
+		background-color: var(--color-pink-light, #e8c3d6);
+		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
+		mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
 		opacity: 0.85;
 	}
 }
@@ -258,6 +322,27 @@
 @media (max-width: 767px) {
   .card-review .card-right, .card-podcast .card-right { display: none; }
   .card-review .card-inner, .card-podcast .card-inner { padding: 14px 16px 16px; }
+}
+
+/* Trapezoid action buttons (home cards) */
+.btn-action {
+	font-family: Helvetica, Arial, ui-sans-serif, system-ui;
+	font-weight: 700;
+	color: var(--color-pink-light, #e8c3d6);
+	background: var(--color-purple-darkest, #654f84);
+	padding: 8px 14px;
+	clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+	border: 2px solid var(--color-purple-dark, #a295b5);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 120ms ease, background-color 120ms ease;
+}
+.btn-action:hover,
+.btn-action:focus-visible {
+	transform: translateY(-1px);
+	background: var(--color-purple-dark, #a295b5);
+	color: var(--color-background-offwhite, #faf8f5);
 }
 
 /* Subtle overlaps: right tile overlaps left; lower overlaps upper */

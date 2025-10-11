@@ -27,8 +27,8 @@ title: Behind The Beat
           <h2 class="card-title">{{ item.title }}</h2>
           <div class="card-bottom">
             <div class="card-left">
-              <blockquote class="card-quote">{{ item.quote | default: item.excerpt | default: item.content | strip_html | truncatewords: 24 }}</blockquote>
-              <span class="card-actions"><span class="btn-trapezoid">Read More</span></span>
+              <blockquote class="card-quote">{{ item.pullquote | default: item.excerpt | default: item.content | strip_html | truncatewords: 24 }}</blockquote>
+              <span class="card-actions"><button type="button" class="btn-trapezoid btn-action btn-read">Read More</button></span>
             </div>
             <div class="card-right">
               {% if item.cover %}
@@ -46,7 +46,7 @@ title: Behind The Beat
           <div class="card-left">
             <h2 class="card-title">{{ item.title }}</h2>
             {% if item.subtitle %}<p class="card-sub">{{ item.subtitle }}</p>{% endif %}
-            <span class="card-actions"><span class="btn-trapezoid">Listen Now</span></span>
+            <span class="card-actions"><button type="button" class="btn-trapezoid btn-action btn-listen">Listen Now</button></span>
           </div>
           <div class="card-right">
             {% if item.cover %}
