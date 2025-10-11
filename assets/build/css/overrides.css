@@ -254,6 +254,8 @@
 	.post-list > .post-card { margin-left: 0; margin-top: 0; }
 }
 
+.post-content img { display: none; }
+
 .img-frame::before {
 	content: "";
 	position: absolute;

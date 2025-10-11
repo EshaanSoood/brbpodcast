@@ -5,23 +5,12 @@ subtitle: Behind The Beat AF
 date: 2025-10-09
 author: Eshaan Sood
 category: Reviews
-cover: /assets/images/Eshaanwithhat.webp
+cover: /assets/images/Dream River Front Cover Digital.jpg
 excerpt: Testing reviews are testingg.
 ---
 
-<figure class="img-frame img-rect-s">
-  <img class="img-media" src="{{ '/assets/images/Eshaanwithhat.webp' | relative_url }}" alt="Eshaan Sood" />
-  
-</figure>
-
-<figure class="img-frame img-rect-m">
-  <img class="img-media" src="{{ '/assets/images/Eshaanwithhat.webp' | relative_url }}" alt="Eshaan Sood" />
-  
-</figure>
-
-<figure class="img-frame img-rect-l">
-  <img class="img-media" src="{{ '/assets/images/Eshaanwithhat.webp' | relative_url }}" alt="Eshaan Sood" />
-  
+<figure class="img-frame img-square-m">
+  <img class="img-media" src="{{ '/assets/images/Dream River Front Cover Digital.jpg' | relative_url }}" alt="Dream River Front Cover" />
 </figure>
 
 <p>Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg. Testing reviews are testingg.</p>
