@@ -120,6 +120,13 @@
 	transition: color 160ms ease;
 }
 
+/* Mobile nav: ensure toggle is tappable and above decorative layers */
+.hamburger-btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 44px; padding: 0 12px; border: 2px solid var(--color-purple-dark, #a295b5); background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); border-radius: 6px; }
+.hamburger-btn:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 2px; }
+.mobile-nav { position: relative; z-index: 30; }
+.mobile-nav > nav { margin-top: 8px; }
+.logo-mobile { max-width: 56vw; height: auto; }
+
 /* Desktop hero sizing + subtle jagged bottom border */
 @media (min-width: 1024px) {
 	.site-main .hero {
@@ -140,6 +147,7 @@
 		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
 		mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
 		opacity: 0.85;
+		pointer-events: none;
 	}
 }
 
@@ -161,6 +169,7 @@
 		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
 		mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
 		opacity: 0.85;
+		pointer-events: none;
 	}
 }
 
@@ -203,6 +212,7 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 16px;
+	overflow-x: hidden; /* prevent horizontal scroll from decorative transforms */
 }
 
 @media (min-width: 768px) {
@@ -322,6 +332,8 @@
 @media (max-width: 767px) {
   .card-review .card-right, .card-podcast .card-right { display: none; }
   .card-review .card-inner, .card-podcast .card-inner { padding: 14px 16px 16px; }
+	/* Soften angle variants on small screens to avoid clipping */
+	.card-angle-13, .card-angle-16 { --card-angle: -9deg; }
 }
 
 /* Trapezoid action buttons (home cards) */
@@ -330,7 +342,7 @@
 	font-weight: 700;
 	color: var(--color-pink-light, #e8c3d6);
 	background: var(--color-purple-darkest, #654f84);
-	padding: 8px 14px;
+	padding: 11px 14px; /* ensure >=44px min-height incl. borders */
 	clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
 	border: 2px solid var(--color-purple-dark, #a295b5);
 	display: inline-flex;
@@ -362,7 +374,8 @@
 	.post-list > .post-card { margin-left: 0; margin-top: 0; }
 }
 
-.post-content img { display: none; }
+/* Allow content images to render; hide only decorative ghosts if needed */
+.post-content img { display: block; max-width: 100%; height: auto; }
 
 .img-frame::before {
 	content: "";
