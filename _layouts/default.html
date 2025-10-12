@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
+    <link rel="preload" href="{{ '/assets/fonts/GrobeDeutschmeister.ttf' | relative_url }}" as="font" type="font/ttf" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -12,10 +13,92 @@
     <link rel="stylesheet" href="{{ "/assets/build/css/build.css" | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/build/css/overrides.css" | relative_url }}">
   </head>
-  <body class="{{ page.body_class }}">
+  <body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}">
+    <a class="skip-link" href="#site-main">Skip to content</a>
     {% include nav.html %}
+    {% include subscribe.html %}
     {{ content }}
+    <div id="footer-sentinel" aria-hidden="true"></div>
     {% include footer.html %}
+    <script>
+    (function(){
+      var header = document.querySelector('header.site-header .top-row');
+      var sentinel = document.getElementById('footer-sentinel');
+      if(!header || !sentinel) return;
+      // Create sentinel before footer
+      var footer = document.querySelector('footer.site-footer');
+      if(footer && !sentinel.parentNode){ document.body.insertBefore(sentinel, footer); }
+      var released = false;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            // Footer is approaching; release sticky
+            if(!released){ header.classList.add('released'); released = true; }
+          } else {
+            if(released){ header.classList.remove('released'); released = false; }
+          }
+        });
+      }, { rootMargin: '0px 0px -80% 0px' });
+      obs.observe(sentinel);
+    })();
+    </script>
+    <script>
+    (function(){
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var supports = 'startViewTransition' in document;
+      if(!supports || reduce) return; // normal nav
+      var loadingTimer = null;
+      var navLoading = document.querySelector('.nav-loading');
+      function startLoadingIndicator(){
+        if(!navLoading) return;
+        if(loadingTimer) clearTimeout(loadingTimer);
+        loadingTimer = setTimeout(function(){ navLoading.classList.add('is-active'); }, 500);
+      }
+      function stopLoadingIndicator(){
+        if(loadingTimer) clearTimeout(loadingTimer);
+        loadingTimer = null;
+        if(navLoading) navLoading.classList.remove('is-active');
+      }
+      function onTap(e){
+        var a = e.target.closest('[data-vt-link]');
+        if(!a) return;
+        var url = a.getAttribute('href');
+        if(!url) return;
+        e.preventDefault();
+        startLoadingIndicator();
+        var vt = document.startViewTransition(function(){ window.location.href = url; });
+        // Stop when new page paints or load events fire
+        vt.finished.finally(stopLoadingIndicator);
+      }
+      document.addEventListener('click', onTap, { capture: true });
+      // Assign transition names from data attributes when present
+      document.addEventListener('click', function(e){
+        var card = e.target.closest('[data-vt-link]');
+        if(!card) return;
+        var imgWrap = card.querySelector('[data-vt-image] img');
+        var titleEl = card.querySelector('[data-vt-title]');
+        if(imgWrap){ imgWrap.style.viewTransitionName = 'card-image'; }
+        if(titleEl){ titleEl.style.viewTransitionName = 'card-title'; }
+      }, { capture: true });
+      window.addEventListener('DOMContentLoaded', stopLoadingIndicator);
+      window.addEventListener('load', stopLoadingIndicator);
+      window.addEventListener('pageshow', stopLoadingIndicator);
+    })();
+    </script>
+    <script>
+    (function(){
+      var overlay = document.getElementById('subscribe-overlay');
+      if(!overlay) return;
+      var openers = document.querySelectorAll('[data-subscribe-open]');
+      var closers = overlay.querySelectorAll('[data-subscribe-close]');
+      function open(){ overlay.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(function(){ overlay.classList.add('is-open'); }, 0); }
+      function close(){ overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+      overlay.addEventListener('transitionend', function(e){ if(e.target === overlay && !overlay.classList.contains('is-open')){ overlay.hidden = true; } });
+      openers.forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
+      closers.forEach(function(btn){ btn.addEventListener('click', function(){ close(); }); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ close(); } });
+    })();
+    </script>
   </body>
 </html>
 
