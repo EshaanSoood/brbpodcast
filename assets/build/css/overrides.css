@@ -165,6 +165,12 @@
   .logo-mobile { max-width: 35vw; height: auto; }
 }
 
+/* Mobile vertical snap between homepage cards (minimal, reversible) */
+@media (max-width: 767px) {
+  html { scroll-snap-type: y proximity; scroll-padding-top: calc(var(--nav-mobile-height, 54px) + 8px); }
+  .post-list > .post-card { scroll-snap-align: start; }
+}
+
 @media (min-width: 768px) {
   /* Desktop sticky nav/logo only; hero is not sticky */
   .site-header .desktop-row { position: sticky; top: 0; z-index: 40; background: var(--color-background-offwhite, #faf8f5); }
