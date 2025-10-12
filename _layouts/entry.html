@@ -2,9 +2,9 @@
 layout: default
 ---
 <main id="site-main" class="site-main">
-  <article class="post">
+  <article class="post{% if page.collection == 'reviews' %} review-entry{% endif %}">
     <header class="post-header">
-      {% if page.collection == 'reviews' %}
+{% if page.collection == 'reviews' %}
       <div class="review-header">
         <div class="review-left">
           <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
@@ -14,14 +14,63 @@ layout: default
           {% endif %}
         </div>
         <div class="review-right" data-vt-image>
-          {% if page.cover %}
+          {% assign header_cover = page.album_cover | default: page.cover %}
+          {% if header_cover %}
           <figure class="img-frame img-square-m review-cover">
-            <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" style="view-transition-name: cover-{{ page.url | slugify }}" />
+            <img class="img-media" src="{{ header_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
           </figure>
           {% endif %}
         </div>
       </div>
-      {% else %}
+{% elsif page.collection == 'podcasts' %}
+      <section class="podcast-entry px-4 md:px-6">
+        <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
+        <p class="post-meta">
+          <time class="post-date text-pink-light italic" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+        </p>
+        <div class="podcast-video" data-video>
+          {% if page.youtube_id %}
+          <button type="button" class="video-poster" data-load-video aria-label="Load video">
+            <img src="https://img.youtube.com/vi/{{ page.youtube_id }}/hqdefault.jpg" alt="Video poster for {{ page.title }}" />
+          </button>
+          {% elsif page.youtube_url %}
+          <button type="button" class="video-poster" data-load-video aria-label="Load video">
+            <div class="video-poster-fallback">Tap to load video</div>
+          </button>
+          {% else %}
+          <div class="video-unavailable">Video unavailable</div>
+          {% endif %}
+        </div>
+
+        {% if page.guest_about %}
+        <section class="podcast-about card-simple">
+          <h2 class="section-title text-purple-darkest">About the Guest</h2>
+          <div class="about-body">{{ page.guest_about | markdownify }}</div>
+        </section>
+        {% endif %}
+
+        {% if page.guest_website_url or page.guest_socials %}
+        <section class="podcast-links">
+          <h2 class="section-title text-purple-darkest">Where to find them</h2>
+          {% if page.guest_website_url %}
+          <p class="guest-website">
+            <a href="{{ page.guest_website_url }}" target="_blank" rel="noopener">{{ page.guest_website_label | default: 'Website' }}</a>
+          </p>
+          {% endif %}
+          {% if page.guest_socials %}
+          <div class="social-row">
+            {% for s in page.guest_socials %}
+            <a class="social-btn" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.platform | default: s.label }}">
+              {% if s.icon %}<span class="icon" aria-hidden="true">{{ s.icon }}</span>{% endif %}
+              <span class="label">{{ s.label | default: s.platform }}</span>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </section>
+        {% endif %}
+      </section>
+{% else %}
       <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
       {% if page.subtitle %}<p class="post-subtitle text-purple-darkest">{{ page.subtitle }}</p>{% endif %}
       <p class="post-meta">
@@ -34,17 +83,20 @@ layout: default
         <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
       </figure>
       {% endif %}
-      {% endif %}
+{% endif %}
     </header>
     <div class="share-row" aria-label="Share this">
       <a class="share-link share-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">FB</a>
       <a class="share-link share-wa" href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20-%20{{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WA</a>
       <a class="share-link share-ig" href="#" aria-label="Share on Instagram">IG</a>
     </div>
-    {% if page.collection == 'reviews' and page.cover %}
+    {% if page.collection == 'reviews' %}
     <!-- Mobile cover placement: appears before body on small screens -->
     <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
-      <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" />
+      {% assign mobile_cover = page.album_cover | default: page.cover %}
+      {% if mobile_cover %}
+      <img class="img-media" src="{{ mobile_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" />
+      {% endif %}
     </figure>
     {% endif %}
     <section class="post-content">
@@ -55,4 +107,34 @@ layout: default
     </div>
   </article>
 </main>
+
+{% if page.collection == 'podcasts' %}
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var box = document.querySelector('.podcast-entry .podcast-video');
+  if(!box) return;
+  var btn = box.querySelector('[data-load-video]');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var id = '{{ page.youtube_id | escape }}';
+    var url = '{{ page.youtube_url | escape }}';
+    var src = '';
+    if(id){ src = 'https://www.youtube.com/embed/' + id + '?rel=0&modestbranding=1'; }
+    else if(url){ src = url.replace('watch?v=', 'embed/'); }
+    if(!src) return;
+    var iframe = document.createElement('iframe');
+    iframe.width = '560';
+    iframe.height = '315';
+    iframe.src = src; // no autoplay per spec
+    iframe.title = 'YouTube video player';
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    box.innerHTML = '';
+    box.appendChild(iframe);
+  });
+})();
+</script>
+{% endif %}
 

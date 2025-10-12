@@ -33,9 +33,9 @@ title: Behind The Beat
               <span class="card-actions"><button type="button" class="btn-trapezoid btn-action btn-read" data-vt-action>Read More</button></span>
             </div>
             <div class="card-right">
-              {% if item.cover %}
+              {% if item.cover or item.album_cover %}
               <div class="card-image card-image-square" data-vt-image>
-                <img src="{{ item.cover | relative_url }}" alt="{{ item.title }}" loading="lazy" style="view-transition-name: cover-{{ item.url | slugify }}" />
+                <img src="{{ (item.cover | default: item.album_cover) | relative_url }}" alt="{{ item.album_cover_alt | default: item.title }}" loading="lazy" style="view-transition-name: cover-{{ item.url | slugify }}" />
               </div>
               {% endif %}
             </div>
