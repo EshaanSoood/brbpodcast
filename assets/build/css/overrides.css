@@ -47,7 +47,7 @@
 /* Mobile card vibe: overlap like homepage, show newest card and next headline peeking */
 @media (max-width: 767px) {
 	.review-row { display: block; text-decoration: none; }
-	.review-row.card-frame { margin-bottom: -8px; }
+	.review-row.card-frame { margin-bottom: -4px; }
 	.reviews-list .review-row:nth-child(2) .review-row-inner { padding-top: 8px; }
 	/* Ensure only first card is full; others are compact */
 	.reviews-list .review-row:nth-child(1) .review-row-inner { padding: 14px 16px 16px; }
@@ -128,12 +128,92 @@
 	--nav-spacing-mobile: 18px;
 }
 
+/* Pulse controls */
+:root {
+	--logo-pulse-state: running; /* set to 'paused' to disable globally */
+	--logo-pulse-scale: 1.03;    /* max scale */
+	--logo-glow-strength: 0.35;  /* opacity of glow at peak */
+}
+
+@keyframes logoPulse {
+	0% { transform: scale(1); }
+	40% { transform: scale(var(--logo-pulse-scale)); }
+	100% { transform: scale(1); }
+}
+
+@keyframes logoGlow {
+	0% { opacity: 0; }
+	40% { opacity: var(--logo-glow-strength); }
+	100% { opacity: 0; }
+}
+
+/* Skip link */
+.skip-link { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { position: fixed; left: 8px; top: 8px; width: auto; height: auto; padding: 8px 12px; background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); border: 2px solid var(--color-pink-light, #e8c3d6); border-radius: 6px; z-index: 9999; }
+
+/* Unified top band (mobile) */
+@media (max-width: 767px) {
+  .site-header .top-band { position: relative; background: var(--color-background-offwhite, #faf8f5); }
+  .site-header .top-row { position: sticky; top: 0; z-index: 50; background: inherit; }
+  .site-header .top-row.released { position: static; }
+  .site-header .tagline-row { background: inherit; border-top: 1px solid rgba(101,79,132,0.12); }
+  body.home .site-header .tagline-row { display: none; } /* hide duplicate tagline on home */
+  .site-header .tagline { margin: 0; text-align: center; line-height: 1.2; max-width: 32ch; margin-left: auto; margin-right: auto; color: var(--color-purple-darkest, #654f84); }
+  .logo-mobile { max-width: 35vw; height: auto; }
+}
+
+@media (min-width: 768px) {
+  /* Desktop sticky nav/logo only; hero is not sticky */
+  .site-header .desktop-row { position: sticky; top: 0; z-index: 40; background: var(--color-background-offwhite, #faf8f5); }
+}
+
+/* Top band height target: ~25vh with floor/ceiling */
+@media (max-width: 767px) {
+  .site-header .top-band { min-height: 140px; max-height: 240px; }
+}
+
+/* Keep decorative elements non-interactive under header */
+.site-header .top-row, .site-header .tagline-row { pointer-events: auto; }
+.site-main .hero::after { pointer-events: none; }
+/* Fallback gaps/heights if arbitrary utilities are missing */
+.nav-row { gap: var(--nav-spacing, 12px); }
+.nav-col { gap: var(--nav-spacing-mobile, 12px); }
+.site-header img[alt][src*="btb-logo-clean"] { height: var(--nav-mobile-height, 54px); width: auto; }
+.hidden.md\:flex .nav-row { gap: var(--nav-spacing, 16px); }
+@media (min-width: 1024px) { .site-main .hero { overflow: hidden; } }
+
 /* Mobile nav: ensure toggle is tappable and above decorative layers */
 .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 44px; padding: 0 12px; border: 2px solid var(--color-purple-dark, #a295b5); background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); border-radius: 6px; }
 .hamburger-btn:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 2px; }
 .mobile-nav { position: relative; z-index: 30; }
 .mobile-nav > nav { margin-top: 8px; }
 .logo-mobile { max-width: 56vw; height: auto; }
+
+/* Navbar slow-nav indicator (pulsing trapezoid) */
+.nav-loading { display: inline-block; width: 36px; height: 16px; margin-left: 10px; clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px); background: var(--color-pink-light, #e8c3d6); opacity: 0; pointer-events: none; }
+/* Subscribe overlay */
+.subscribe-overlay { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.35); z-index: 100; opacity: 0; transition: opacity 160ms ease; }
+.subscribe-overlay.is-open { opacity: 1; }
+.subscribe-backdrop { position: absolute; inset: 0; }
+.subscribe-dialog { position: relative; max-width: 720px; width: calc(100% - 24px); margin: 0 auto; background: var(--color-background-offwhite, #faf8f5); border: 2px solid var(--color-pink-light, #e8c3d6); border-radius: 14px; padding: 12px; box-shadow: 0 10px 30px rgba(101,79,132,0.22); }
+.subscribe-close { position: absolute; top: 8px; right: 8px; border: 0; background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; }
+.subscribe-close:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 2px; }
+@media (min-width: 768px) { .subscribe-dialog { padding: 16px; } }
+
+/* Contact form (Formspree) */
+.contact-form { display: grid; gap: 12px; margin-top: 12px; }
+.contact-form .field-group { display: grid; gap: 6px; }
+.contact-form label { color: var(--color-purple-darkest, #654f84); font-weight: 700; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 12px 14px; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: #fff; outline: none; transition: box-shadow .15s ease, border-color .15s ease; box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--color-pink-light, #e8c3d6); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-pink-light) 35%, transparent); }
+.contact-form .actions { margin-top: 8px; }
+@keyframes navPulse { 0%,100%{ transform: scale(1); background: var(--color-pink-light, #e8c3d6);} 50%{ transform: scale(1.06); background: var(--color-purple-darkest, #654f84);} }
+@media (prefers-reduced-motion: no-preference) {
+  .nav-loading.is-active { opacity: 1; animation: navPulse 1.2s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-loading.is-active { opacity: 0.85; }
+}
 
 /* Ensure clear focus for first/last nav items on mobile */
 .nav-col .nav-link:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 3px; border-radius: 6px; }
@@ -145,7 +225,10 @@
 		/* target ~3.5/9 of 16:9 viewport minus nav height */
 		min-height: calc(39vh - var(--nav-height));
 		padding-block: 20px; /* tighten large spacing */
+		z-index: 1; /* keep content above decorative stripe */
 	}
+	/* add breathing room below hero before cards */
+	.site-main + section, .site-main .post-list { margin-top: 24px; }
 	.site-main .hero::after {
 		content: "";
 		position: absolute;
@@ -159,16 +242,13 @@
 		mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
 		opacity: 0.85;
 		pointer-events: none;
+		z-index: 0;
 	}
 }
 
 /* Mobile hero: proportionally smaller height and border matching mobile nav */
 @media (max-width: 767px) {
-	.site-main .hero {
-		position: relative;
-		min-height: calc(34vh - var(--nav-mobile-height));
-		padding-block: 14px;
-	}
+	.site-main .hero { display: none; }
 	.site-main .hero::after {
 		content: "";
 		position: absolute;
@@ -261,6 +341,7 @@
 	height: 100%;
 	object-fit: cover;
 	background: transparent;
+    view-transition-name: none; /* default off; set inline on tap */
 }
 
 /* Chamfered frame with chunky pink strokes on chamfered edges only */
@@ -353,7 +434,7 @@
 	font-weight: 700;
 	color: var(--color-pink-light, #e8c3d6);
 	background: var(--color-purple-darkest, #654f84);
-	padding: 11px 14px; /* ensure >=44px min-height incl. borders */
+	padding: 13px 16px; /* increase for large-text AA */
 	clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
 	border: 2px solid var(--color-purple-dark, #a295b5);
 	display: inline-flex;
@@ -461,8 +542,50 @@
 
 /* Ensure "special" heading treatments are only for page headings.
    Regular headings in review/podcast content should be plain but branded. */
-.page-header .page-title { /* keep special page heading styles */ }
-.page-title-bg::before { /* keep ghosted background title */ }
+@font-face {
+	font-family: 'Grobe Deutschmeister';
+	src: url('../fonts/GrobeDeutschmeister.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root { --font-heading: 'Grobe Deutschmeister', 'Bebas Neue', ui-sans-serif, system-ui, sans-serif; }
+
+/* Global heading font override */
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading, 'Bebas Neue', ui-sans-serif, system-ui, sans-serif); }
+
+/* Special page heading (Mission, Reviews, Podcasts, Contact) */
+.page-header { padding: 16px; }
+@media (min-width: 768px) { .page-header { padding: 24px; } }
+
+.page-title-stack { position: relative; display: inline-block; text-align: left; }
+.page-title-bg::before {
+    content: attr(data-title);
+    display: block;
+    font-family: var(--font-heading, 'Bebas Neue', ui-sans-serif, system-ui, sans-serif);
+    color: var(--color-pink-light, #e8c3d6);
+    opacity: 0.9;
+    line-height: 0.95;
+    letter-spacing: normal;
+    margin: 0; /* remove gap to allow true centering */
+    font-size: clamp(3rem, 12vw, 8rem); /* large pink word (~2x h1) */
+}
+
+.page-header .page-title {
+    position: absolute; /* center within the pink word block */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    margin: 0;
+    font-family: var(--font-heading, 'Bebas Neue', ui-sans-serif, system-ui, sans-serif);
+    color: var(--color-purple-darkest, #654f84);
+    line-height: 1.05;
+    letter-spacing: normal;
+    font-size: clamp(1.6rem, 6vw, 4rem);
+    text-align: center;
+}
 
 .post-content h1,
 .post-content h2,
@@ -477,4 +600,25 @@
 	background: none;
 	box-shadow: none;
 	border: 0;
+}
+
+/* Pulse wrapper for hero logo */
+.logo-pulse { position: relative; display: inline-block; will-change: transform; animation: logoPulse 2.5s ease-in-out var(--logo-pulse-delay, 0.4s) var(--logo-pulse-state, running) infinite; }
+.logo-pulse::after { content: ""; position: absolute; inset: -6px; border-radius: 9999px; pointer-events: none; background: radial-gradient(circle, rgba(232,195,214,1) 0%, rgba(232,195,214,0) 70%); filter: blur(8px); opacity: 0; animation: logoGlow 2.5s ease-in-out var(--logo-pulse-delay, 0.4s) var(--logo-pulse-state, running) infinite; }
+.logo-pulse:hover, .logo-pulse:focus-visible { animation-play-state: paused; }
+/* Keep focus ring visible against glow */
+.logo-pulse:focus-visible { outline: 2px solid var(--color-purple-darkest, #654f84); outline-offset: 4px; border-radius: 8px; }
+
+/* Pause pulse when mobile menu is open (reduce nearby motion) */
+header.site-header details[open] ~ main .logo-pulse, header.site-header details[open] .logo-pulse { animation-play-state: paused; }
+
+/* Reduced motion: disable pulse, keep subtle static glow */
+@media (prefers-reduced-motion: reduce) {
+	.logo-pulse { animation: none !important; }
+	.logo-pulse::after { opacity: 0.2 !important; animation: none !important; }
+}
+
+@media (max-width: 767px) {
+	::view-transition-group(root) { animation-duration: 0.25s; animation-timing-function: ease-out; }
+	::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }

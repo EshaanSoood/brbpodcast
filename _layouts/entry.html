@@ -7,22 +7,22 @@ layout: default
       {% if page.collection == 'reviews' %}
       <div class="review-header">
         <div class="review-left">
-          <h1 class="post-title text-purple-darkest">{{ page.title }}</h1>
+          <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
           {% if page.author %}<p class="post-author-line"><em>by {{ page.author }}</em></p>{% endif %}
           {% if page.pullquote %}
           <blockquote class="pull-quote">{{ page.pullquote }}</blockquote>
           {% endif %}
         </div>
-        <div class="review-right">
+        <div class="review-right" data-vt-image>
           {% if page.cover %}
           <figure class="img-frame img-square-m review-cover">
-            <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" />
+            <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" style="view-transition-name: cover-{{ page.url | slugify }}" />
           </figure>
           {% endif %}
         </div>
       </div>
       {% else %}
-      <h1 class="post-title text-purple-darkest">{{ page.title }}</h1>
+      <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
       {% if page.subtitle %}<p class="post-subtitle text-purple-darkest">{{ page.subtitle }}</p>{% endif %}
       <p class="post-meta">
         {% if page.author %}<span class="post-author text-purple-dark">{{ page.author }}</span>{% endif %}
@@ -30,8 +30,8 @@ layout: default
         {% if page.category %} • <a href="{{ '/' | relative_url }}{{ page.category | downcase }}/">{{ page.category }}</a>{% endif %}
       </p>
       {% if page.cover %}
-      <figure class="post-feature img-frame img-rect-m">
-        <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }}" />
+      <figure class="post-feature img-frame img-rect-m" data-vt-image style="aspect-ratio: 16/9; max-width: 560px;">
+        <img class="img-media" src="{{ page.cover | relative_url }}" alt="{{ page.title }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
       </figure>
       {% endif %}
       {% endif %}
