@@ -859,3 +859,30 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   .site-header .desktop-row a[aria-label="Home"]{ position: relative; z-index: 2; }
   .site-header .desktop-row a[aria-label="Home"] img{ display:block; margin-bottom:-2px; }
 }
+
+/* Review header grid, spacing, and alignment */
+.article-header {
+  display: grid;
+  grid-template-columns: 1fr min(34ch, 32%);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Chips belong to the header cluster */
+.share-chips { margin-top: .5rem; }
+
+/* Remove empty band under the header */
+main > :first-child { margin-top: 0; }
+.page, .site-main { display: flow-root; }
+
+/* Tracklist proximity and width */
+.review-trackbox { margin-top: .75rem; max-width: 70ch; }
+
+/* Stream section spacing */
+.stream-title { margin: .75rem 0 .25rem; }
+.stream-links { margin-top: .25rem; }
+
+/* Container alignment guard */
+.site-container { max-width: 72rem; margin-inline: auto; padding-inline: 1rem; }

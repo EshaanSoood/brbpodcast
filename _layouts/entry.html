@@ -12,6 +12,11 @@ layout: default
           {% if page.pullquote %}
           <blockquote class="pull-quote"><p>{{ page.pullquote }}</p></blockquote>
           {% endif %}
+          <div class="share-chips" aria-label="Share this">
+            <a class="share-link share-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">FB</a>
+            <a class="share-link share-wa" href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20-%20{{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WA</a>
+            <a class="share-link share-ig" href="#" aria-label="Share on Instagram">IG</a>
+          </div>
         </div>
         <figure class="article-figure" data-vt-image>
           {% assign header_cover = page.album_cover | default: page.cover %}
@@ -76,28 +81,25 @@ layout: default
       {% endif %}
 {% endif %}
     </header>
-    <div class="share-row share-chips" aria-label="Share this">
-      <a class="share-link share-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">FB</a>
-      <a class="share-link share-wa" href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20-%20{{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WA</a>
-      <a class="share-link share-ig" href="#" aria-label="Share on Instagram">IG</a>
-    </div>
+    
     {% if page.collection == 'reviews' %}
-    <section class="review-trackbox site-container" aria-labelledby="tracklist-title">
-      <h2 id="tracklist-title" class="tracklist-title">Tracklist</h2>
-      {% if page.tracks %}
-        <ol class="tracklist">
-          {% for t in page.tracks %}
-            <li>{{ t }}</li>
-          {% endfor %}
-        </ol>
-      {% else %}
-        <ol class="tracklist">
-          <li>Song Name</li>
-          <li>Song Name</li>
-          <li>Song Name</li>
-        </ol>
-      {% endif %}
-
+    <section class="site-container">
+      <div class="review-trackbox" aria-labelledby="tracklist-title">
+        <h2 id="tracklist-title" class="tracklist-title">Tracklist</h2>
+        {% if page.tracks %}
+          <ol class="tracklist">
+            {% for t in page.tracks %}
+              <li>{{ t }}</li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <ol class="tracklist">
+            <li>Song Name</li>
+            <li>Song Name</li>
+            <li>Song Name</li>
+          </ol>
+        {% endif %}
+      </div>
       <h2 class="stream-title">Stream the album</h2>
       <div class="stream-links" role="list">
         <a class="stream-logo" href="{{ page.stream.spotify | default: '#' }}" aria-label="Listen on Spotify" rel="noopener noreferrer" target="_blank" role="listitem">
