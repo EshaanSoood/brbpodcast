@@ -5,7 +5,7 @@ layout: default
   <article class="post{% if page.collection == 'reviews' %} review-entry{% endif %}">
     <header class="post-header">
 {% if page.collection == 'reviews' %}
-      <header class="article-header site-container" aria-labelledby="post-title">
+      <header class="article-header" aria-labelledby="post-title">
         <div class="article-head-left">
           <h1 id="post-title" class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
           <p class="meta">{% if page.author %}<span class="byline">by {{ page.author }}</span>{% endif %} <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%B %-d, %Y' }}</time></p>
@@ -81,9 +81,23 @@ layout: default
       {% endif %}
 {% endif %}
     </header>
-    
+
     {% if page.collection == 'reviews' %}
-    <section class="site-container">
+    <!-- Mobile cover placement: appears before body on small screens -->
+    <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
+      {% assign mobile_cover = page.album_cover | default: page.cover %}
+      {% if mobile_cover %}
+      <img class="img-media" src="{{ mobile_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" />
+      {% endif %}
+    </figure>
+    {% endif %}
+
+    <section class="post-content">
+      {{ content }}
+    </section>
+
+    {% if page.collection == 'reviews' %}
+    <section>
       <div class="review-trackbox" aria-labelledby="tracklist-title">
         <h2 id="tracklist-title" class="tracklist-title">Tracklist</h2>
         {% if page.tracks %}
@@ -117,18 +131,7 @@ layout: default
       </div>
     </section>
     {% endif %}
-    {% if page.collection == 'reviews' %}
-    <!-- Mobile cover placement: appears before body on small screens -->
-    <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
-      {% assign mobile_cover = page.album_cover | default: page.cover %}
-      {% if mobile_cover %}
-      <img class="img-media" src="{{ mobile_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" />
-      {% endif %}
-    </figure>
-    {% endif %}
-    <section class="post-content">
-      {{ content }}
-    </section>
+    
     <div class="subscribe-cta">
       <button type="button" class="btn-trapezoid btn-subscribe">Subscribe</button>
     </div>

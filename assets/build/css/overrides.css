@@ -868,6 +868,7 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   gap: clamp(1rem, 3vw, 2rem);
   margin-top: 0;
   padding-top: 0;
+  padding-bottom: 0; /* neutralize bottom padding to kill white band */
 }
 
 /* Chips belong to the header cluster */
