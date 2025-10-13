@@ -102,15 +102,6 @@ HTML_HEAD = '''<!DOCTYPE html>
       </div>
     </header>
     <main id="site-main" class="site-main">
-      <section class="hero px-4 md:px-6 py-8 md:py-12">
-        <div class="hero-logo">
-          <img src="assets/images/btb-logo-clean.png" alt="Behind The Beat" />
-        </div>
-        <div class="max-w-2xl">
-          <h1 class="text-3xl md:text-5xl font-heading leading-tight text-purple-darkest">Heartfelt Reviews & Introspective Interviews.</h1>
-          <p class="mt-3 md:mt-4 text-base md:text-lg text-purple-dark">A deep dive  into the albums and artists we truly love.</p>
-        </div>
-      </section>
       <section class="px-4 md:px-6">
         <div class="post-list">'''
 

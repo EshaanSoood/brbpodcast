@@ -3,15 +3,16 @@ layout: default
 title: Behind The Beat
 ---
 <main id="site-main" class="site-main">
-  <section class="hero site-container py-8 md:py-12">
-    <div class="hero-logo">
-      <a href="{{ '/' | relative_url }}" aria-label="Home" class="logo-pulse">
+  <section class="site-container hero-simple" aria-labelledby="hero-title">
+    <div class="hero-left">
+      <a href="{{ '/' | relative_url }}" aria-label="Home" class="hero-logo">
         <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
       </a>
     </div>
-    <div class="max-w-2xl tagline-animate">
-      <h1 class="text-3xl md:text-5xl font-heading leading-tight text-purple-darkest line line-1">Welcome to Behind The Beat.</h1>
-      <p class="mt-3 md:mt-4 text-base md:text-lg text-purple-dark line line-2">come on in.</p>
+    <div class="hero-right">
+      <h1 id="hero-title" class="hero-line hero-line-1 text-purple-darkest">Welcome to Behind The Beat.</h1>
+      <p class="hero-line hero-line-2">Journalism away from algorithmic noise.</p>
+      <p class="hero-line hero-line-3">Come on in!</p>
     </div>
   </section>
 

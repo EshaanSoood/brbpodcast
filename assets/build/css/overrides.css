@@ -177,7 +177,6 @@
 .nav-col { gap: var(--nav-spacing-mobile, 12px); }
 .site-header img[alt][src*="btb-logo-clean"] { height: var(--nav-mobile-height, 54px); width: auto; }
 .hidden.md\:flex .nav-row { gap: var(--nav-spacing, 16px); }
-@media (min-width: 1024px) { .site-main .hero { overflow: hidden; } }
 
 /* Mobile nav: ensure toggle is tappable and above decorative layers */
 .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 44px; padding: 0 12px; border: 2px solid var(--color-purple-dark, #a295b5); background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); border-radius: 6px; }
@@ -250,18 +249,7 @@
 /* Ensure clear focus for first/last nav items on mobile */
 .nav-col .nav-link:focus-visible { outline: 2px solid var(--color-pink-light, #e8c3d6); outline-offset: 3px; border-radius: 6px; }
 
-/* Desktop hero sizing + subtle jagged bottom border */
-@media (min-width: 1024px) {
-	.site-main .hero {
-		position: relative;
-		max-height: calc(33vh - var(--nav-height));
-		padding-block: 20px; /* tighten large spacing */
-		z-index: 1; /* keep content above decorative stripe */
-	}
-	/* add breathing room below hero before cards */
-	.site-main + section, .site-main .post-list { margin-top: 24px; }
-    /* removed hero decorative stripe */
-}
+/* Desktop hero removed */
 
 /* Global site container: align vertical gutters to nav bar padding */
 .site-container {
@@ -281,17 +269,9 @@
 @keyframes vtFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes vtFadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-/* Tagline slide-in animation */
-.tagline-animate .line { display: inline-block; opacity: 0; transform: translateY(8px); }
-.tagline-animate .line-1 { animation: tlSlideIn 420ms ease-out 60ms forwards; }
-.tagline-animate .line-2 { animation: tlSlideIn 420ms ease-out 220ms forwards; }
-@keyframes tlSlideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* Tagline animation removed */
 
-/* Mobile hero: proportionally smaller height and border matching mobile nav */
-@media (max-width: 767px) {
-	.site-main .hero { display: none; }
-    /* removed hero decorative stripe */
-}
+/* Mobile hero removed */
 
 /* Image frames: small/medium/large, rectangle and square
    - Adaptive to portrait/landscape via object-fit: contain
@@ -469,10 +449,11 @@
   .card-image.card-image-square { aspect-ratio: 1 / 1; width: 100%; max-width: 220px; display: flex; align-items: center; justify-content: center; }
   .card-image.card-image-square img { width: 100%; height: 100%; object-fit: cover; }
 
-  .card-podcast .card-inner { padding: 14px 16px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
-  .card-podcast .card-left { display: grid; grid-template-rows: 2fr 2fr 1fr; gap: 8px; align-items: center; }
+  .card-podcast .card-inner { padding: 14px 16px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+  .card-podcast .card-left { display: grid; grid-template-rows: 1fr auto auto; gap: 8px; align-items: end; }
   .card-podcast .card-title { margin: 0; color: var(--color-purple-darkest, #654f84); }
   .card-podcast .card-sub { color: var(--color-purple-dark, #a295b5); margin: 0; }
+  .card-podcast .card-actions { align-self: end; }
   .card-podcast .card-actions .btn-trapezoid { display: inline-block; }
   .card-podcast .card-right { display: flex; justify-content: center; }
   .card-image.card-image-portrait { aspect-ratio: 4 / 5; width: 100%; max-width: 240px; display: flex; align-items: center; justify-content: center; }
@@ -723,21 +704,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading, 'Bebas Neue', ui-sans-
 	border: 0;
 }
 
-/* Pulse wrapper for hero logo */
-.logo-pulse { position: relative; display: inline-block; will-change: transform, opacity; animation: logoFadeIn 480ms ease-out 60ms both; }
-.logo-pulse::after { content: ""; position: absolute; inset: -10px; border-radius: 9999px; pointer-events: none; background: radial-gradient(circle, rgba(232,195,214,0.35) 0%, rgba(232,195,214,0.18) 45%, rgba(232,195,214,0) 75%); filter: blur(10px); opacity: 1; }
-.logo-pulse:hover, .logo-pulse:focus-visible { }
-/* Keep focus ring visible against glow */
-.logo-pulse:focus-visible { outline: 2px solid var(--color-purple-darkest, #654f84); outline-offset: 4px; border-radius: 8px; }
-
-/* Pause pulse when mobile menu is open (reduce nearby motion) */
-header.site-header details[open] ~ main .logo-pulse, header.site-header details[open] .logo-pulse { }
-
-/* Reduced motion: disable pulse, keep subtle static glow */
-@media (prefers-reduced-motion: reduce) {
-	.logo-pulse { animation: none !important; opacity: 1; }
-	.logo-pulse::after { opacity: 1 !important; }
-}
+/* Hero logo pulse removed */
 
 @media (max-width: 767px) {
 	::view-transition-group(root) { animation-duration: 0.25s; animation-timing-function: ease-out; }
@@ -746,6 +713,21 @@ header.site-header details[open] ~ main .logo-pulse, header.site-header details[
 
 /* Align content to the same container as nav */
 .site-container{max-width:72rem;margin-inline:auto;padding-inline:1rem}
+
+/* --- NEW HERO (simple, no stripes, no stray padding) --- */
+.hero-simple{ display:grid; grid-template-columns: 1fr 2fr; align-items:center; min-height: 33vh; padding-block: 0; gap: clamp(12px, 3vw, 20px); }
+.hero-simple .hero-left{ display:flex; align-items:center; justify-content:flex-start; }
+.hero-simple .hero-logo{ display:inline-block; opacity:0; animation: heroFadeIn 480ms ease-out 80ms forwards; }
+.hero-simple .hero-logo img{ display:block; height: clamp(60px, 12vh, 120px); width:auto; }
+.hero-simple .hero-right{ display:grid; gap: 6px; }
+.hero-line{ opacity:0; transform: translateY(8px); margin: 0; }
+.hero-line-1{ animation: heroLineIn 420ms ease-out 120ms forwards; font-family: var(--font-heading, 'Bebas Neue', ui-sans-serif, system-ui, sans-serif); font-size: clamp(1.6rem, 4vw, 2.5rem); line-height: 1.1; }
+.hero-line-2{ animation: heroLineIn 420ms ease-out 260ms forwards; font-weight: 700; font-family: Helvetica, Arial, ui-sans-serif, system-ui; color: var(--color-purple-darkest, #654f84); }
+.hero-line-3{ animation: heroLineIn 420ms ease-out 380ms forwards; font-weight: 700; font-family: Helvetica, Arial, ui-sans-serif, system-ui; color: var(--color-purple-darkest, #654f84); }
+@keyframes heroFadeIn{ from{ opacity:0; transform: scale(.98);} to{ opacity:1; transform: scale(1);} }
+@keyframes heroLineIn{ from{ opacity:0; transform: translateY(8px);} to{ opacity:1; transform: translateY(0);} }
+@media (max-width: 767px){ .hero-simple{ grid-template-columns: 1fr; min-height: 30vh; } .hero-simple .hero-left{ justify-content:center; } .hero-simple .hero-right{ text-align:center; } }
+@media (prefers-reduced-motion: reduce){ .hero-simple .hero-logo, .hero-line{ animation: none !important; opacity: 1; transform: none; } }
 
 /* Remove phantom gap under header */
 main,.post-body,.article-header{margin-top:0;padding-top:0}
@@ -917,8 +899,6 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 }
 .site-footer .footer-credit{ text-align:center; }
 /* Global trim: remove excess white band under nav */
-.site-main .hero{ padding-top: 0 !important; }
-@media (min-width: 1024px){ .site-main .hero{ padding-top: 0 !important; } }
 .site-main + section, .site-main .post-list { margin-top: 8px !important; }
 .page-header { padding-top: 0 !important; }
 @media (min-width: 768px){ .page-header { padding-top: 0 !important; } }
