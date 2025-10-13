@@ -100,14 +100,43 @@
     (function(){
       var overlay = document.getElementById('subscribe-overlay');
       if(!overlay) return;
+      var dialog = overlay.querySelector('.subscribe-dialog');
       var openers = document.querySelectorAll('[data-subscribe-open]');
       var closers = overlay.querySelectorAll('[data-subscribe-close]');
-      function open(){ overlay.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(function(){ overlay.classList.add('is-open'); }, 0); }
-      function close(){ overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
-      overlay.addEventListener('transitionend', function(e){ if(e.target === overlay && !overlay.classList.contains('is-open')){ overlay.hidden = true; } });
+      var lastActive = null;
+      var prevOverflow = '';
+      function open(){
+        lastActive = document.activeElement;
+        prevOverflow = document.body.style.overflow;
+        overlay.hidden = false; // always show immediately
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        // focus dialog (needs tabindex="-1")
+        if(dialog){ dialog.focus(); }
+      }
+      function close(){
+        overlay.classList.remove('is-open');
+        overlay.hidden = true; // hide immediately regardless of animations
+        document.body.style.overflow = prevOverflow;
+        if(lastActive && typeof lastActive.focus === 'function'){ lastActive.focus(); }
+      }
       openers.forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
       closers.forEach(function(btn){ btn.addEventListener('click', function(){ close(); }); });
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ close(); } });
+      // Basic focus trap
+      overlay.addEventListener('keydown', function(e){
+        if(e.key !== 'Tab') return;
+        var focusables = overlay.querySelectorAll('a[href],button:not([disabled]),textarea,input[type="text"],input[type="email"],input[type="tel"],input[type="submit"],select,[tabindex]:not([tabindex="-1"])');
+        focusables = Array.prototype.slice.call(focusables).filter(function(el){ return el.offsetParent !== null; });
+        if(focusables.length === 0) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if(e.shiftKey){
+          if(document.activeElement === first){ e.preventDefault(); last.focus(); }
+        } else {
+          if(document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+      });
     })();
     </script>
   </body>

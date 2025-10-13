@@ -3,7 +3,7 @@ layout: default
 title: Behind The Beat
 ---
 <main id="site-main" class="site-main">
-  <section class="hero px-4 md:px-6 py-8 md:py-12">
+  <section class="hero site-container py-8 md:py-12">
     <div class="hero-logo">
       <a href="{{ '/' | relative_url }}" aria-label="Home" class="logo-pulse">
         <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
@@ -15,7 +15,7 @@ title: Behind The Beat
     </div>
   </section>
 
-  <section class="px-4 md:px-6">
+  <section class="site-container">
     <div class="post-list">
       {% assign all = site.reviews | concat: site.podcasts %}
       {% assign sorted = all | sort: 'date' | reverse %}

@@ -46,15 +46,9 @@
 
 /* Mobile card vibe: overlap like homepage, show newest card and next headline peeking */
 @media (max-width: 767px) {
-	.review-row { display: block; text-decoration: none; }
-	.review-row.card-frame { margin-bottom: -4px; }
-	.reviews-list .review-row:nth-child(2) .review-row-inner { padding-top: 8px; }
-	/* Ensure only first card is full; others are compact */
-	.reviews-list .review-row:nth-child(1) .review-row-inner { padding: 14px 16px 16px; }
-	.reviews-list .review-row:nth-child(n+2) .review-row-inner { padding: 8px 16px; }
-	.reviews-list .review-row:nth-child(n+2) .review-row-sub, 
-	.reviews-list .review-row:nth-child(n+2) .review-row-excerpt { display: none; }
-	.reviews-list .review-row:nth-child(n+2) .review-row-meta { font-size: 0.85rem; opacity: 0.85; }
+  .review-row { display: block; text-decoration: none; }
+  .review-row.card-frame { margin-bottom: -4px; }
+  .reviews-list .review-row .review-row-inner { padding: 14px 16px 16px; }
 }
 
 /* Entry header typography refinements */
@@ -249,21 +243,7 @@
 	}
 	/* add breathing room below hero before cards */
 	.site-main + section, .site-main .post-list { margin-top: 24px; }
-	.site-main .hero::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: -1px;
-		height: var(--nav-height);
-		background-color: var(--color-pink-light, #e8c3d6);
-		/* create a subtle jagged/sawtooth edge using a mask */
-		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
-		mask-image: repeating-linear-gradient(-45deg, #000 0 10px, transparent 10px 20px);
-		opacity: 0.85;
-		pointer-events: none;
-		z-index: 0;
-	}
+    /* removed hero decorative stripe */
 }
 
 /* Global site container: align vertical gutters to nav bar padding */
@@ -293,19 +273,7 @@
 /* Mobile hero: proportionally smaller height and border matching mobile nav */
 @media (max-width: 767px) {
 	.site-main .hero { display: none; }
-	.site-main .hero::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: -1px;
-		height: var(--nav-mobile-height);
-		background-color: var(--color-pink-light, #e8c3d6);
-		-webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
-		mask-image: repeating-linear-gradient(-45deg, #000 0 8px, transparent 8px 16px);
-		opacity: 0.85;
-		pointer-events: none;
-	}
+    /* removed hero decorative stripe */
 }
 
 /* Image frames: small/medium/large, rectangle and square
@@ -347,6 +315,7 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 16px;
+	align-items: stretch; /* ensure equal-height items per row */
 	overflow-x: hidden; /* prevent horizontal scroll from decorative transforms */
 }
 
@@ -367,6 +336,7 @@
 	padding: 14px 16px 16px;
 	/* create room for the chamfered border */
 	overflow: hidden;
+	height: 100%; /* stretch to equal row height */
 	/* Exaggerated chamfer corners */
 	clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
 }
@@ -439,16 +409,17 @@
 .card-angle-16 { --card-angle: -16deg; transform: skewX(var(--card-angle)); }
 /* Unify skew on desktop; no skew on mobile */
 @media (min-width: 768px) {
-  .card-angle-9, .card-angle-11, .card-angle-13, .card-angle-16 { --card-angle: -11deg; }
+  .card-angle-9, .card-angle-11, .card-angle-13, .card-angle-16 { --card-angle: -10deg; }
 }
 @media (max-width: 767px) {
-  .card-angle-9, .card-angle-11, .card-angle-13, .card-angle-16 { --card-angle: 0deg; }
-  .post-list > .post-card { transform: none !important; }
+  .card-angle-9, .card-angle-11, .card-angle-13, .card-angle-16 { --card-angle: -10deg; }
+  .post-list > .post-card { transform: skewX(-10deg) !important; }
 }
 
 /* Unskew inner content so text/media are readable */
 .post-card.card-frame .card-media,
 .post-card.card-frame .post-card-content { transform: skewX(calc(-1 * var(--card-angle, 0deg))); }
+.post-card.card-frame .card-inner { transform: skewX(calc(-1 * var(--card-angle, 0deg))); }
 
 /* Spacing for content */
 .post-card-title { margin: 6px 0 2px; }
@@ -459,8 +430,8 @@
 @media (min-width: 768px) {
   .card-review .card-inner { padding: 14px 16px 16px; }
   .card-review .card-title { margin: 0 0 8px; color: var(--color-purple-darkest, #654f84); }
-  .card-review .card-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
-  .card-review .card-left { display: grid; grid-template-rows: 1fr auto; gap: 10px; }
+.card-review .card-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
+.card-review .card-left { display: grid; grid-template-rows: 1fr auto; gap: 10px; align-items: end; }
   .card-review .card-quote { color: #3f3652; opacity: 0.95; }
   .card-review .card-actions .btn-trapezoid { display: inline-block; }
   .card-review .card-right { display: flex; justify-content: center; }
@@ -599,7 +570,7 @@
 /* Review entry - magazine wrap (desktop only) */
 @media (min-width: 1024px) {
 	.review-entry .post-content { max-width: 70ch; margin: 0 auto; }
-	.review-entry .feature-right { float: right; max-width: 360px; margin: 8px 0 12px 16px; }
+	.review-entry .post-content .feature-right { float: right; max-width: 360px; margin: 8px 0 12px 16px; }
 	.review-entry .feature-right img { display: block; width: 100%; height: auto; }
 	.review-entry .feature-right figcaption { font-size: 0.9rem; color: var(--color-purple-dark, #a295b5); margin-top: 6px; }
 }
@@ -708,7 +679,7 @@ main>:first-child{margin-top:0}
 }
 .article-head-left>*{margin-block:.25rem .75rem}
 .meta{font-size:.95em;opacity:.85;display:flex;gap:.75rem;align-items:baseline}
-.article-figure{margin:0}
+.article-figure{margin:0;float:none}
 .article-figure img{display:block;width:100%;height:auto}
 
 /* Pull-quote in header */
@@ -722,6 +693,8 @@ main>:first-child{margin-top:0}
 
 /* Chips/CTAs live in normal flow */
 .share-chips{position:static !important;float:none !important;margin-top:.75rem;display:flex;gap:.5rem}
+.post-content .share-chips{clear:both}
+.post-content .share-row{clear:both}
 
 /* First word highlight (same size as body; no drop cap) */
 .lead-word{
@@ -776,26 +749,20 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 .review-trackbox{
   --cream: var(--cream, #fff3f7);
   --purple: var(--brand-purple, #6e4b8e);
-  --lpurple: color-mix(in oklab, var(--purple) 55%, white);
+  --lpurple: color-mix(in srgb, var(--purple) 55%, white);
   --pink: var(--brand-pink, #cc6aa7);
+  --c: 10px;
   position: relative;
   margin-block: clamp(1rem, 3vw, 1.5rem);
   padding: clamp(.75rem, 2.5vw, 1.25rem);
   color: var(--purple);
-  background: color-mix(in oklab, var(--cream) 85%, white);
+  /* semi-transparent so blur shows through */
+  background: color-mix(in srgb, var(--cream) 75%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   /* chamfered corners */
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c));
   border: 1.5px solid var(--lpurple);
-}
-.review-trackbox::before{
-  content:"";
-  position:absolute; inset:6px;
-  clip-path: inherit;
-  border: 1px solid color-mix(in oklab, var(--lpurple) 70%, white);
-  pointer-events:none;
-  border-radius: 0; /* ensure crisp chamfers */
 }
 .tracklist-title,
 .stream-title{
@@ -826,17 +793,22 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   width: auto; height: 44px;
   padding: .35rem .5rem;
   background: var(--bg);
+  background-color: var(--bg);
   border: 1.5px solid var(--bd);
+  border-color: var(--bd);
   clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
   transition: background-color .15s ease-out, border-color .15s ease-out, transform .12s ease-out;
 }
 .stream-logo:hover,
 .stream-logo:focus-visible{
-  --bg: var(--lpurple);
-  --bd: color-mix(in oklab, var(--purple) 65%, white);
+  --bg: color-mix(in srgb, var(--purple) 40%, white);
+  --bd: color-mix(in srgb, var(--purple) 65%, white);
+  background-color: color-mix(in srgb, var(--purple) 40%, white);
+  border-color: color-mix(in srgb, var(--purple) 65%, white);
   transform: translateY(-1px);
   outline: none;
 }
+.stream-logo:active{ transform: translateY(0); }
 .stream-logo img{
   display:block; height: 24px; width: auto;
 }
@@ -861,3 +833,29 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   text-align:center;
 }
 .site-footer .footer-credit{ text-align:center; }
+
+/* Remove hero pink stripe */
+.site-main .hero::after { content: none !important; }
+
+/* Global trim: remove excess white band under nav */
+.site-main .hero{ padding-top: 0 !important; }
+@media (min-width: 1024px){ .site-main .hero{ padding-top: 0 !important; } }
+.site-main + section, .site-main .post-list { margin-top: 8px !important; }
+.page-header { padding-top: 0 !important; }
+@media (min-width: 768px){ .page-header { padding-top: 0 !important; } }
+.article-header { padding-top: 0 !important; }
+
+/* Desktop nav: make bar emerge from logo (subtle 2–4px overlap) */
+@media (min-width: 768px){
+  .site-header .desktop-row{ padding-top:0; padding-bottom:0; }
+  .site-header .desktop-row .nav-row{
+    position: relative;
+    z-index: 1;
+    background: var(--color-pink-light, #e8c3d6);
+    padding: 6px 10px; /* compact bar height */
+    margin-left: -4px;  /* tuck bar slightly under logo */
+    clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+  }
+  .site-header .desktop-row a[aria-label="Home"]{ position: relative; z-index: 2; }
+  .site-header .desktop-row a[aria-label="Home"] img{ display:block; margin-bottom:-2px; }
+}
