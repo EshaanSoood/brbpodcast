@@ -9,9 +9,9 @@ title: Behind The Beat
         <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
       </a>
     </div>
-    <div class="max-w-2xl">
-      <h1 class="text-3xl md:text-5xl font-heading leading-tight text-purple-darkest">Heartfelt Reviews & Introspective Interviews.</h1>
-      <p class="mt-3 md:mt-4 text-base md:text-lg text-purple-dark">A deep dive  into the albums and artists we truly love.</p>
+    <div class="max-w-2xl tagline-animate">
+      <h1 class="text-3xl md:text-5xl font-heading leading-tight text-purple-darkest line line-1">Welcome to Behind The Beat.</h1>
+      <p class="mt-3 md:mt-4 text-base md:text-lg text-purple-dark line line-2">come on in.</p>
     </div>
   </section>
 

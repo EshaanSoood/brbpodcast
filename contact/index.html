@@ -1,62 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../assets/images/btb-logo-clean.png">
-    <link rel="apple-touch-icon" href="../assets/images/btb-logo-clean.png">
-    <link rel="stylesheet" href="../assets/build/css/build.css">
-    <link rel="stylesheet" href="../assets/build/css/overrides.css">
-  </head>
-  <body>
-    {% include nav.html %}
-    <main id="site-main" class="site-main px-4 md:px-6">
-      <header class="page-header">
-        <div class="page-title-stack page-title-bg" data-title="Contact">
-          <h1 class="page-title">Contact</h1>
-        </div>
-      </header>
-      <section class="page-well">
-        <div class="page-content">
-          <p>Feel free to send us some mail at: <a href="mailto:info@behindbeats.com">info@behindbeats.com</a></p>
-          <p>If you’re a reader/listener, we’d love to hear from you. Please feel free to email us or fill the form below.</p>
-          <p>If you’re an artist and would like to send us your album to review, please fill out the form below or email us. Please be sure to send a download‑free link. We do not use Spotify in this house so anything apart from that should be good.</p>
-          <p>We only review things that can be spoken about positively from our own <u>subjective</u> point of view.</p>
+---
+layout: default
+title: Contact
+permalink: /contact/
+---
+<main id="site-main" class="site-main px-4 md:px-6">
+  <header class="page-header">
+    <div class="page-title-stack page-title-bg" data-title="Contact">
+      <h1 class="page-title">Contact</h1>
+    </div>
+  </header>
+  <section class="page-well">
+    <div class="page-content">
+      <p>Feel free to send us some mail at: <a href="mailto:info@behindbeats.com">info@behindbeats.com</a></p>
+      <p>If you’re a reader/listener, we’d love to hear from you. Please feel free to email us or fill the form below.</p>
+      <p>If you’re an artist and would like to send us your album to review, please fill out the form below or email us. Please be sure to send a download‑free link. We do not use Spotify in this house so anything apart from that should be good.</p>
+      <p>We only review things that can be spoken about positively from our own <u>subjective</u> point of view.</p>
 
-          <form action="https://formspree.io/f/mkgqqljp" method="POST" class="contact-form" novalidate>
-            <div class="field-group">
-              <label for="cf-first">First Name</label>
-              <input type="text" id="cf-first" name="first_name" required>
-            </div>
-            <div class="field-group">
-              <label for="cf-last">Last Name</label>
-              <input type="text" id="cf-last" name="last_name" required>
-            </div>
-            <div class="field-group">
-              <label for="cf-email">Email</label>
-              <input type="email" id="cf-email" name="email" required>
-            </div>
-            <div class="field-group">
-              <label for="cf-subject">Subject</label>
-              <input type="text" id="cf-subject" name="subject" required>
-            </div>
-            <div class="field-group">
-              <label for="cf-message">Message</label>
-              <textarea id="cf-message" name="message" rows="6" required></textarea>
-            </div>
-            <div class="actions">
-              <button type="submit" class="btn-trapezoid btn-action">Send</button>
-            </div>
-          </form>
+      <form action="https://formspree.io/f/mkgqqljp" method="POST" class="contact-form" novalidate>
+        <div class="field-group">
+          <label for="cf-first">First Name</label>
+          <input type="text" id="cf-first" name="first_name" required>
         </div>
-      </section>
-    </main>
-    {% include footer.html %}
-  </body>
-  </html>
+        <div class="field-group">
+          <label for="cf-last">Last Name</label>
+          <input type="text" id="cf-last" name="last_name" required>
+        </div>
+        <div class="field-group">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" required>
+        </div>
+        <div class="field-group">
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" name="subject" required>
+        </div>
+        <div class="field-group">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="6" required></textarea>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn-trapezoid btn-action">Send</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
 
 

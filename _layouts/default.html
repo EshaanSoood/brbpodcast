@@ -16,10 +16,12 @@
   <body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}">
     <a class="skip-link" href="#site-main">Skip to content</a>
     {% include nav.html %}
-    {% include subscribe.html %}
-    {{ content }}
-    <div id="footer-sentinel" aria-hidden="true"></div>
-    {% include footer.html %}
+    <div class="site-container">
+      {% include subscribe.html %}
+      {{ content }}
+      <div id="footer-sentinel" aria-hidden="true"></div>
+      {% include footer.html %}
+    </div>
     <script>
     (function(){
       var header = document.querySelector('header.site-header .top-row');
@@ -29,16 +31,19 @@
       var footer = document.querySelector('footer.site-footer');
       if(footer && !sentinel.parentNode){ document.body.insertBefore(sentinel, footer); }
       var released = false;
+      var toggleTimer = null;
       var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            // Footer is approaching; release sticky
-            if(!released){ header.classList.add('released'); released = true; }
-          } else {
-            if(released){ header.classList.remove('released'); released = false; }
-          }
+          if(toggleTimer) clearTimeout(toggleTimer);
+          toggleTimer = setTimeout(function(){
+            if(entry.isIntersecting){
+              if(!released){ header.classList.add('released'); released = true; }
+            } else {
+              if(released){ header.classList.remove('released'); released = false; }
+            }
+          }, 60);
         });
-      }, { rootMargin: '0px 0px -80% 0px' });
+      }, { rootMargin: '0px 0px -60% 0px' });
       obs.observe(sentinel);
     })();
     </script>
@@ -46,7 +51,23 @@
     (function(){
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var supports = 'startViewTransition' in document;
-      if(!supports || reduce) return; // normal nav
+      // Fallback fade for browsers without View Transitions or when reduced motion is enabled
+      if(!supports || reduce){
+        document.addEventListener('click', function(e){
+          var a = e.target.closest('[data-vt-link]');
+          if(!a) return;
+          var url = a.getAttribute('href');
+          if(!url) return;
+          e.preventDefault();
+          document.documentElement.classList.add('vt-fade-out');
+          setTimeout(function(){ window.location.href = url; }, 140);
+        }, { capture: true });
+        window.addEventListener('DOMContentLoaded', function(){
+          document.documentElement.classList.add('vt-fade-in');
+          setTimeout(function(){ document.documentElement.classList.remove('vt-fade-in'); }, 240);
+        });
+        return;
+      }
       var loadingTimer = null;
       var navLoading = document.querySelector('.nav-loading');
       function startLoadingIndicator(){
@@ -59,26 +80,16 @@
         loadingTimer = null;
         if(navLoading) navLoading.classList.remove('is-active');
       }
-      function onTap(e){
+      document.addEventListener('click', function(e){
         var a = e.target.closest('[data-vt-link]');
         if(!a) return;
         var url = a.getAttribute('href');
         if(!url) return;
         e.preventDefault();
         startLoadingIndicator();
+        // Keep existing inline view-transition-name values (title-<slug>, cover-<slug>) for shared elements
         var vt = document.startViewTransition(function(){ window.location.href = url; });
-        // Stop when new page paints or load events fire
         vt.finished.finally(stopLoadingIndicator);
-      }
-      document.addEventListener('click', onTap, { capture: true });
-      // Assign transition names from data attributes when present
-      document.addEventListener('click', function(e){
-        var card = e.target.closest('[data-vt-link]');
-        if(!card) return;
-        var imgWrap = card.querySelector('[data-vt-image] img');
-        var titleEl = card.querySelector('[data-vt-title]');
-        if(imgWrap){ imgWrap.style.viewTransitionName = 'card-image'; }
-        if(titleEl){ titleEl.style.viewTransitionName = 'card-title'; }
       }, { capture: true });
       window.addEventListener('DOMContentLoaded', stopLoadingIndicator);
       window.addEventListener('load', stopLoadingIndicator);

@@ -1,33 +1,29 @@
 ---
 layout: default
 ---
-<main id="site-main" class="site-main">
+<main id="site-main" class="site-main site-container">
   <article class="post{% if page.collection == 'reviews' %} review-entry{% endif %}">
     <header class="post-header">
 {% if page.collection == 'reviews' %}
-      <div class="review-header">
-        <div class="review-left">
-          <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
-          {% if page.author %}<p class="post-author-line"><em>by {{ page.author }}</em></p>{% endif %}
+      <header class="article-header site-container" aria-labelledby="post-title">
+        <div class="article-head-left">
+          <h1 id="post-title" class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
+          <p class="meta">{% if page.author %}<span class="byline">by {{ page.author }}</span>{% endif %} <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%B %-d, %Y' }}</time></p>
           {% if page.pullquote %}
-          <blockquote class="pull-quote">{{ page.pullquote }}</blockquote>
+          <blockquote class="pull-quote"><p>{{ page.pullquote }}</p></blockquote>
           {% endif %}
         </div>
-        <div class="review-right" data-vt-image>
+        <figure class="article-figure" data-vt-image>
           {% assign header_cover = page.album_cover | default: page.cover %}
           {% if header_cover %}
-          <figure class="img-frame img-square-m review-cover">
-            <img class="img-media" src="{{ header_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
-          </figure>
+            <img src="{{ header_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
           {% endif %}
-        </div>
-      </div>
+        </figure>
+      </header>
 {% elsif page.collection == 'podcasts' %}
-      <section class="podcast-entry px-4 md:px-6">
-        <h1 class="post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
-        <p class="post-meta">
-          <time class="post-date text-pink-light italic" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%b %-d, %Y" }}</time>
-        </p>
+      <section class="site-container podcast-wrap">
+        <h1 class="podcast-title post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
+        <time class="podcast-date post-date text-pink-light italic" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%b %-d, %Y" }}</time>
         <div class="podcast-video" data-video>
           {% if page.youtube_id %}
           <button type="button" class="video-poster" data-load-video aria-label="Load video">
@@ -43,31 +39,26 @@ layout: default
         </div>
 
         {% if page.guest_about %}
-        <section class="podcast-about card-simple">
+        <aside class="about-card podcast-about card-simple">
           <h2 class="section-title text-purple-darkest">About the Guest</h2>
           <div class="about-body">{{ page.guest_about | markdownify }}</div>
-        </section>
+        </aside>
         {% endif %}
 
         {% if page.guest_website_url or page.guest_socials %}
-        <section class="podcast-links">
-          <h2 class="section-title text-purple-darkest">Where to find them</h2>
+        <div class="podcast-links">
           {% if page.guest_website_url %}
-          <p class="guest-website">
-            <a href="{{ page.guest_website_url }}" target="_blank" rel="noopener">{{ page.guest_website_label | default: 'Website' }}</a>
-          </p>
+          <a class="social-btn" href="{{ page.guest_website_url }}" target="_blank" rel="noopener">{{ page.guest_website_label | default: 'Website' }}</a>
           {% endif %}
           {% if page.guest_socials %}
-          <div class="social-row">
             {% for s in page.guest_socials %}
             <a class="social-btn" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.platform | default: s.label }}">
               {% if s.icon %}<span class="icon" aria-hidden="true">{{ s.icon }}</span>{% endif %}
               <span class="label">{{ s.label | default: s.platform }}</span>
             </a>
             {% endfor %}
-          </div>
           {% endif %}
-        </section>
+        </div>
         {% endif %}
       </section>
 {% else %}
@@ -85,11 +76,45 @@ layout: default
       {% endif %}
 {% endif %}
     </header>
-    <div class="share-row" aria-label="Share this">
+    <div class="share-row share-chips" aria-label="Share this">
       <a class="share-link share-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">FB</a>
       <a class="share-link share-wa" href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20-%20{{ page.url | absolute_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WA</a>
       <a class="share-link share-ig" href="#" aria-label="Share on Instagram">IG</a>
     </div>
+    {% if page.collection == 'reviews' %}
+    <section class="review-trackbox site-container" aria-labelledby="tracklist-title">
+      <h2 id="tracklist-title" class="tracklist-title">Tracklist</h2>
+      {% if page.tracks %}
+        <ol class="tracklist">
+          {% for t in page.tracks %}
+            <li>{{ t }}</li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <ol class="tracklist">
+          <li>Song Name</li>
+          <li>Song Name</li>
+          <li>Song Name</li>
+        </ol>
+      {% endif %}
+
+      <h2 class="stream-title">Stream the album</h2>
+      <div class="stream-links" role="list">
+        <a class="stream-logo" href="{{ page.stream.spotify | default: '#' }}" aria-label="Listen on Spotify" rel="noopener noreferrer" target="_blank" role="listitem">
+          <img src="/assets/brands/spotify.svg" alt="" />
+        </a>
+        <a class="stream-logo" href="{{ page.stream.apple | default: '#' }}" aria-label="Listen on Apple Music" rel="noopener noreferrer" target="_blank" role="listitem">
+          <img src="/assets/brands/apple-music.svg" alt="" />
+        </a>
+        <a class="stream-logo" href="{{ page.stream.youtube | default: '#' }}" aria-label="Listen on YouTube Music" rel="noopener noreferrer" target="_blank" role="listitem">
+          <img src="/assets/brands/youtube-music.svg" alt="" />
+        </a>
+        <a class="stream-logo" href="{{ page.stream.bandcamp | default: '#' }}" aria-label="Listen on Bandcamp" rel="noopener noreferrer" target="_blank" role="listitem">
+          <img src="/assets/brands/bandcamp.svg" alt="" />
+        </a>
+      </div>
+    </section>
+    {% endif %}
     {% if page.collection == 'reviews' %}
     <!-- Mobile cover placement: appears before body on small screens -->
     <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
