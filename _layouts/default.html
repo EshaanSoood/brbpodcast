@@ -17,7 +17,6 @@
     <a class="skip-link" href="#site-main">Skip to content</a>
     {% include nav.html %}
     <div class="site-container">
-      {% include subscribe.html %}
       {{ content }}
       <div id="footer-sentinel" aria-hidden="true"></div>
       {% include footer.html %}
@@ -98,45 +97,56 @@
     </script>
     <script>
     (function(){
-      var overlay = document.getElementById('subscribe-overlay');
-      if(!overlay) return;
-      var dialog = overlay.querySelector('.subscribe-dialog');
-      var openers = document.querySelectorAll('[data-subscribe-open]');
-      var closers = overlay.querySelectorAll('[data-subscribe-close]');
+      var overlay = null;
+      var dialog = null;
       var lastActive = null;
       var prevOverflow = '';
+      var openers = document.querySelectorAll('[data-subscribe-open]');
+
+      function ensureOverlay(){
+        if(overlay) return overlay;
+        var tpl = document.createElement('template');
+        tpl.innerHTML = '\n<div class="subscribe-overlay" id="subscribe-overlay" hidden>\n  <div class="subscribe-backdrop" data-subscribe-close aria-hidden="true"></div>\n  <div class="subscribe-dialog" role="dialog" aria-modal="true" aria-labelledby="subscribe-title" tabindex="-1">\n    <button type="button" class="subscribe-close" data-subscribe-close aria-label="Close subscribe form">✕</button>\n    <div id="mc_embed_shell">\n      <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">\n      <div id="mc_embed_signup">\n        <img class="btb-form__logo" src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="Behind The Beat logo">\n        <form action="https://github.us22.list-manage.com/subscribe/post?u=f1b69e21f3230273dacff4ed5&amp;id=9df3622d09&amp;f_id=00e5c2e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>\n          <div id="mc_embed_signup_scroll">\n            <h2 id="subscribe-title">Subscribe</h2>\n            <p class="btb-note">Hey! We hate pop-up forms as much as you, so thank you for choosing to click on the subscribe button. We promise to never spam your inbox, and unsubscribing is sad for us but easy for you.</p>\n            <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>\n            <div class="mc-field-group">\n              <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>\n              <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-FNAME">First Name <span class="asterisk">*</span></label>\n              <input type="text" name="FNAME" class="text" id="mce-FNAME" value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-LNAME">Last Name <span class="asterisk">*</span></label>\n              <input type="text" name="LNAME" class="text" id="mce-LNAME" value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-PHONE">Phone Number</label>\n              <input type="text" name="PHONE" class="REQ_CSS" id="mce-PHONE" value="">\n            </div>\n            <div class="optionalParent">\n              <div class="btb-actions">\n                <span class="btb-trap">\n                  <input type="submit" name="subscribe" id="mc-embedded-subscribe" value="Subscribe" aria-label="Subscribe">\n                </span>\n              </div>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n';
+        overlay = tpl.content.firstElementChild;
+        document.body.appendChild(overlay);
+        dialog = overlay.querySelector('.subscribe-dialog');
+        var closers = overlay.querySelectorAll('[data-subscribe-close]');
+        closers.forEach(function(btn){ btn.addEventListener('click', function(){ close(); }); });
+        // Focus trap
+        overlay.addEventListener('keydown', function(e){
+          if(e.key !== 'Tab') return;
+          var focusables = overlay.querySelectorAll('a[href],button:not([disabled]),textarea,input[type="text"],input[type="email"],input[type="tel"],input[type="submit"],select,[tabindex]:not([tabindex="-1"])');
+          focusables = Array.prototype.slice.call(focusables).filter(function(el){ return el.offsetParent !== null; });
+          if(focusables.length === 0) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if(e.shiftKey){ if(document.activeElement === first){ e.preventDefault(); last.focus(); } }
+          else { if(document.activeElement === last){ e.preventDefault(); first.focus(); } }
+        });
+        return overlay;
+      }
+
       function open(){
+        ensureOverlay();
         lastActive = document.activeElement;
         prevOverflow = document.body.style.overflow;
-        overlay.hidden = false; // always show immediately
+        overlay.hidden = false;
         overlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
-        // focus dialog (needs tabindex="-1")
         if(dialog){ dialog.focus(); }
+        document.addEventListener('keydown', onKeydown);
       }
       function close(){
+        if(!overlay) return;
         overlay.classList.remove('is-open');
-        overlay.hidden = true; // hide immediately regardless of animations
+        overlay.hidden = true;
         document.body.style.overflow = prevOverflow;
+        document.removeEventListener('keydown', onKeydown);
         if(lastActive && typeof lastActive.focus === 'function'){ lastActive.focus(); }
       }
+      function onKeydown(e){ if(e.key === 'Escape'){ close(); } }
+
       openers.forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
-      closers.forEach(function(btn){ btn.addEventListener('click', function(){ close(); }); });
-      document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ close(); } });
-      // Basic focus trap
-      overlay.addEventListener('keydown', function(e){
-        if(e.key !== 'Tab') return;
-        var focusables = overlay.querySelectorAll('a[href],button:not([disabled]),textarea,input[type="text"],input[type="email"],input[type="tel"],input[type="submit"],select,[tabindex]:not([tabindex="-1"])');
-        focusables = Array.prototype.slice.call(focusables).filter(function(el){ return el.offsetParent !== null; });
-        if(focusables.length === 0) return;
-        var first = focusables[0];
-        var last = focusables[focusables.length - 1];
-        if(e.shiftKey){
-          if(document.activeElement === first){ e.preventDefault(); last.focus(); }
-        } else {
-          if(document.activeElement === last){ e.preventDefault(); first.focus(); }
-        }
-      });
     })();
     </script>
   </body>

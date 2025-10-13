@@ -147,8 +147,7 @@
   .site-header .top-row { position: sticky; top: 0; z-index: 50; background: inherit; }
   .site-header .top-row.released { position: static; }
   .site-header .tagline-row { background: inherit; border-top: 1px solid rgba(101,79,132,0.12); }
-  body.home .site-header .tagline-row { display: none; } /* hide duplicate tagline on home */
-  body.mission .site-header .tagline-row { display: none; }
+  .site-header .tagline-row { display: none !important; }
   .site-header .tagline { margin: 0; text-align: center; line-height: 1.2; max-width: 32ch; margin-left: auto; margin-right: auto; color: var(--color-purple-darkest, #654f84); }
   .logo-mobile { max-width: 35vw; height: auto; }
   /* Push hamburger (mobile-nav) to the right edge */
@@ -173,7 +172,6 @@
 
 /* Keep decorative elements non-interactive under header */
 .site-header .top-row, .site-header .tagline-row { pointer-events: auto; }
-.site-main .hero::after { pointer-events: none; }
 /* Fallback gaps/heights if arbitrary utilities are missing */
 .nav-row { gap: var(--nav-spacing, 12px); }
 .nav-col { gap: var(--nav-spacing-mobile, 12px); }
@@ -193,6 +191,7 @@
 /* Subscribe overlay */
 .subscribe-overlay { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.35); z-index: 100; opacity: 0; transition: opacity 160ms ease; }
 .subscribe-overlay.is-open { opacity: 1; }
+.subscribe-overlay[hidden] { display: none !important; }
 .subscribe-backdrop { position: absolute; inset: 0; }
 .subscribe-dialog { position: relative; max-width: 720px; width: calc(100% - 24px); margin: 0 auto; background: var(--color-background-offwhite, #faf8f5); border: 2px solid var(--color-pink-light, #e8c3d6); border-radius: 14px; padding: 12px; box-shadow: 0 10px 30px rgba(101,79,132,0.22); }
 .subscribe-close { position: absolute; top: 8px; right: 8px; border: 0; background: var(--color-purple-darkest, #654f84); color: var(--color-pink-light, #e8c3d6); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; }
@@ -205,14 +204,14 @@
 .contact-form label { color: var(--color-purple-darkest, #654f84); font-weight: 700; }
 .contact-form input, .contact-form textarea { width: 100%; padding: 12px 14px; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: #fff; outline: none; transition: box-shadow .15s ease, border-color .15s ease; box-shadow: 0 0 0 0 rgba(0,0,0,0); }
 .contact-form input:focus, .contact-form textarea:focus { border-color: var(--color-pink-light, #e8c3d6); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-pink-light) 35%, transparent); }
-.contact-form .actions { margin-top: 8px; }
+.contact-form .actions { margin-top: 12px; }
 /* Name row grouping on desktop */
 @media (min-width: 768px) {
   .contact-form .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 }
 /* Strengthened rhythm */
 .contact-form .field-group { gap: 8px; }
-.contact-form { gap: 14px; }
+.contact-form { gap: 12px; }
 /* Trapezoid CTA styling alignment */
 .contact-form .actions .btn-trapezoid { display: inline-block; }
 .contact-form .actions .btn-action { display: inline-block; }
@@ -344,19 +343,33 @@
 }
 
 .post-card.card-frame {
-	position: relative;
-	display: block;
-	text-decoration: none;
-	background: var(--color-background-offwhite, #faf8f5);
-	/* subtle dark purple shadow */
-	box-shadow: 0 4px 10px rgba(101,79,132,0.10), 0 1px 3px rgba(101,79,132,0.14);
-	/* padding for text content */
-	padding: 14px 16px 16px;
-	/* create room for the chamfered border */
-	overflow: hidden;
-	height: 100%; /* stretch to equal row height */
-	/* Exaggerated chamfer corners */
-	clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background: #F9F4FA; /* Postcard White */
+    /* subtle dark purple shadow */
+    box-shadow: 0 4px 10px rgba(101,79,132,0.10), 0 1px 3px rgba(101,79,132,0.14);
+    /* padding for text content */
+    padding: 14px 16px 16px;
+    /* create room for the chamfered border */
+    overflow: hidden;
+    height: 100%; /* stretch to equal row height */
+    /* Per-side chamfers (defaults) */
+    --c-top: 12px; /* top chamfer */
+    --c-right: 12px; /* right chamfer */
+    --c-bottom: 12px; /* bottom chamfer */
+    --c-left: 12px; /* left chamfer */
+    /* Build chamfered shape using per-side values */
+    clip-path: polygon(
+        var(--c-left) 0%,
+        calc(100% - var(--c-right)) 0%,
+        100% var(--c-top),
+        100% calc(100% - var(--c-bottom)),
+        calc(100% - var(--c-right)) 100%,
+        var(--c-left) 100%,
+        0% calc(100% - var(--c-bottom)),
+        0% var(--c-top)
+    );
 }
 
 /* 4:5 media region */
@@ -494,16 +507,56 @@
 	color: var(--color-background-offwhite, #faf8f5);
 }
 
+/* Brand trapezoid button (alias of .btn-action) */
+.btn-trapezoid {
+  font-family: Helvetica, Arial, ui-sans-serif, system-ui;
+  font-weight: 700;
+  color: var(--color-pink-light, #e8c3d6);
+  background: var(--color-purple-darkest, #654f84);
+  padding: 13px 16px;
+  clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+  border: 2px solid var(--color-purple-dark, #a295b5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+.btn-trapezoid:hover,
+.btn-trapezoid:focus-visible {
+  transform: translateY(-1px);
+  background: var(--color-purple-dark, #a295b5);
+  color: var(--color-background-offwhite, #faf8f5);
+}
+
 /* Subtle overlaps: right tile overlaps left; lower overlaps upper */
 @media (min-width: 768px) {
 	.post-list > .post-card { position: relative; }
-	.post-list > .post-card:nth-child(2n) { /* right column */
+    .post-list > .post-card:nth-child(2n) { /* right column */
 		margin-left: -16px; /* increased horizontal overlap */
 		z-index: 2;
 	}
 	.post-list > .post-card:nth-child(n+3) { /* second row and below */
 		margin-top: -16px; /* increased vertical overlap */
 	}
+}
+
+/* Remove interior chamfers to avoid diamond gaps (desktop) */
+@media (min-width: 768px) {
+  /* Right column: no left chamfer */
+  .post-list > .post-card:nth-child(2n) .card-frame,
+  .post-list > .post-card:nth-child(2n).card-frame {
+    --c-left: 0px;
+  }
+  /* Left column: no right chamfer */
+  .post-list > .post-card:nth-child(2n+1) .card-frame,
+  .post-list > .post-card:nth-child(2n+1).card-frame {
+    --c-right: 0px;
+  }
+  /* Rows ≥ 2: remove top chamfer to avoid diamonds between rows */
+  .post-list > .post-card:nth-child(n+3) .card-frame,
+  .post-list > .post-card:nth-child(n+3).card-frame {
+    --c-top: 0px;
+  }
 }
 
 /* Ensure overlaps remain subtle on mobile (single column) */
@@ -863,10 +916,6 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   text-align:center;
 }
 .site-footer .footer-credit{ text-align:center; }
-
-/* Remove hero pink stripe */
-.site-main .hero::after { content: none !important; }
-
 /* Global trim: remove excess white band under nav */
 .site-main .hero{ padding-top: 0 !important; }
 @media (min-width: 1024px){ .site-main .hero{ padding-top: 0 !important; } }
