@@ -1,0 +1,51 @@
+Podcast Page Tidy — Plan (no code changes yet)
+
+Scope: _layouts/entry.html, assets/build/css/overrides.css (optional read of _layouts/default.html for container check). No JS, no color/type changes.
+
+1) Kill stray rule under H1
+- Inspect computed styles of h1.podcast-title for border/box-shadow/pseudo (::after) causing a line.
+- If inherited from a generic .post-title/.page-title rule, neutralize only for .podcast-title (border: 0; box-shadow: none; background: none).
+- Ensure no adjacent hr is inserted by the template near the title (verify entry.html around the podcast branch).
+
+2) Title/date spacing cohesion
+- Treat title+date as one cluster. Set:
+  - .podcast-title { margin-bottom: 0.25rem; }
+  - .podcast-date  { margin-top: 0; display: block; opacity: 0.85; }
+- Verify keyboard order: title → date → video.
+
+3) Video block top spacing
+- Reduce top margin of .podcast-video to match header rhythm:
+  - .podcast-video { margin-block: clamp(0.5rem, 1.8vw, 1rem); }
+- Keep aspect-ratio: 16/9 and container width unchanged.
+
+4) About card readability width
+- Constrain about card width while keeping container edges aligned:
+  - .podcast-wrap .podcast-about { max-width: 70ch; margin-inline: 0; }
+- Maintain existing padding/border; do not change colors/typography.
+
+5) Website link in chip row (no stranded link)
+- Ensure Website appears inside the single .podcast-links row:
+  - In entry.html, confirm the Website anchor is inside .podcast-links (it is). Keep order: Website first, then social chips.
+  - In CSS, enforce a single row flow with wrap:
+    - .podcast-links { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  - Ensure .social-btn styling applies to Website as well (same class).
+
+6) Container sanity and rhythm
+- Header, video, about card, and links remain inside the existing .site-container from default layout. Do not nest a second .site-container around the podcast branch.
+- Rhythm targets:
+  - title→date = small
+  - date→video = small/medium
+  - video→about = medium
+  - about→links = small/medium
+
+7) Minimal diffs (when applying)
+- CSS: add narrowly-scoped rules for .podcast-title/.podcast-date/.podcast-video/.podcast-about/.podcast-links in overrides.css.
+- HTML: only adjust placement/order if the Website link is found outside .podcast-links (currently OK); otherwise no HTML changes needed.
+
+Acceptance (self-check before returning diffs)
+- No visible rule/line under the H1.
+- Title/date read as a single unit with tight spacing.
+- Video top spacing balanced with sections below.
+- About card width ~70ch, improved readability.
+- Website link is within the chip row, aligned with other chips.
+- Edges align to the nav’s .site-container; no extra wrappers added.

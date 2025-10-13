@@ -26,7 +26,7 @@ layout: default
         </figure>
       </header>
 {% elsif page.collection == 'podcasts' %}
-      <section class="site-container podcast-wrap">
+      <section class="podcast-wrap">
         <h1 class="podcast-title post-title text-purple-darkest" data-vt-title style="view-transition-name: title-{{ page.url | slugify }}">{{ page.title }}</h1>
         <time class="podcast-date post-date text-pink-light italic" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%b %-d, %Y" }}</time>
         <div class="podcast-video" data-video>
@@ -52,8 +52,8 @@ layout: default
 
         {% if page.guest_website_url or page.guest_socials %}
         <div class="podcast-links">
-          {% if page.guest_website_url %}
-          <a class="social-btn" href="{{ page.guest_website_url }}" target="_blank" rel="noopener">{{ page.guest_website_label | default: 'Website' }}</a>
+        {% if page.guest_website_url %}
+          <a class="social-btn" href="{{ page.guest_website_url }}" target="_blank" rel="noopener noreferrer">{{ page.guest_website_label | default: 'Website' }}</a>
           {% endif %}
           {% if page.guest_socials %}
             {% for s in page.guest_socials %}
