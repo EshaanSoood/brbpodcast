@@ -1,3 +1,6 @@
+/* Reset default browser margins that create the top band */
+html, body { margin: 0; padding: 0; }
+
 /* Post grid: force 2 columns on md and up */
 @media (min-width: 768px) {
 	.post-list {
@@ -328,13 +331,6 @@
 }
 
 /* Homepage post cards: framed 4:5 tiles, full-card link, subtle overlap */
-.post-list {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 16px;
-	align-items: stretch; /* ensure equal-height items per row */
-	overflow-x: hidden; /* prevent horizontal scroll from decorative transforms */
-}
 
 @media (min-width: 768px) {
 	.post-list {
@@ -974,3 +970,157 @@ main > :first-child { margin-top: 0; }
 
 /* Container alignment guard */
 .site-container { max-width: 72rem; margin-inline: auto; padding-inline: calc(var(--spacing)*3); }
+
+/* Mission page: remove top gap below nav and prevent margin collapse */
+.mission .site-container { display: flow-root; }
+.mission .site-container > :first-child { margin-top: 0; padding-top: 8px; }
+
+/* Prevent margin-collapse under the nav */
+.site-main > :first-child,
+.page .site-container > :first-child,
+.mission .site-container > :first-child {
+  margin-top: 0 !important;
+  padding-top: 8px; /* breathing room without collapse */
+}
+
+/* --- New Postcard Grid and Card rules (override) --- */
+.post-list {
+	display: grid;
+	grid-template-columns: 1fr;		 /* 1 col: mobile */
+	gap: 16px;							 /* mobile breathing room */
+	align-items: stretch;
+	overflow: visible;					 /* let overlaps show */
+}
+
+/* 2 cols: tablet (overlap on) */
+@media (min-width: 768px) and (max-width: 1023px) {
+	.post-list { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0; }
+}
+
+/* 3 cols: desktop (overlap on) */
+@media (min-width: 1024px) {
+	.post-list { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; }
+}
+
+/* CARD BASE */
+.post-card.card-frame {
+	position: relative; display: block; height: 100%; text-decoration: none;
+	background: #F9F4FA;
+	box-shadow: 0 4px 10px rgba(101,79,132,.10), 0 1px 3px rgba(101,79,132,.14);
+	padding: 14px 16px 16px;
+	overflow: visible;
+
+	/* chamfers */
+	--c-top: 12px; --c-right: 12px; --c-bottom: 12px; --c-left: 12px;
+	--edge: var(--color-purple-dark, #a295b5);
+	--chamfer: var(--color-pink-light, #e8c3d6);
+	clip-path: polygon(
+		var(--c-left) 0%, calc(100% - var(--c-right)) 0%,
+		100% var(--c-top), 100% calc(100% - var(--c-bottom)),
+		calc(100% - var(--c-right)) 100%, var(--c-left) 100%,
+		0% calc(100% - var(--c-bottom)), 0% var(--c-top)
+	);
+
+	/* playful tilt */
+	--card-angle: -8deg;
+	transform: skewX(var(--card-angle));
+	transition: transform 140ms ease, box-shadow 140ms ease;
+}
+.post-card.card-frame:hover,
+.post-card.card-frame:focus-visible {
+	transform: skewX(var(--card-angle)) translateY(-2px);
+	box-shadow: 0 8px 22px rgba(101,79,132,.18);
+	outline: none;
+}
+
+/* frame strokes */
+.post-card.card-frame::before {
+	content: ""; position: absolute; inset: 0; pointer-events: none; clip-path: inherit;
+	--b: 3px;
+	background:
+		linear-gradient(var(--edge),var(--edge)) top/100% var(--b) no-repeat,
+		linear-gradient(var(--edge),var(--edge)) bottom/100% var(--b) no-repeat,
+		linear-gradient(var(--edge),var(--edge)) left/var(--b) 100% no-repeat,
+		linear-gradient(var(--edge),var(--edge)) right/var(--b) 100% no-repeat;
+}
+.post-card.card-frame::after {
+	content: ""; position: absolute; inset: 0; pointer-events: none; clip-path: inherit;
+	--b: 4px; opacity: .9;
+	box-shadow:
+		inset var(--b) var(--b) 0 0 var(--chamfer),
+		inset calc(-1*var(--b)) calc(-1*var(--b)) 0 0 var(--chamfer);
+}
+
+/* unskew inner content */
+.post-card.card-frame .card-inner,
+.post-card.card-frame .post-card-content,
+.post-card.card-frame .card-media {
+	transform: skewX(calc(-1 * var(--card-angle)));
+}
+
+/* MEDIA */
+.post-card .card-media {
+	position: relative; width: 100%; aspect-ratio: 4/5; margin-bottom: 12px;
+	clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+}
+.post-card .card-media img {
+	position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+
+/* CONTENT */
+.post-card-title { margin: 6px 0 2px; color: var(--color-purple-darkest,#654f84); }
+.post-card-meta  { font-size: .9rem; opacity: .85; margin-bottom: 6px; }
+.post-card-excerpt { margin-top: 6px; color: #3f3652; }
+.post-card .card-actions { margin-top: 10px; }
+
+/* OVERLAP LOGIC + STAGGER */
+/* Tablet (2 cols): gentle right-overlap + row lift; kill interior chamfers */
+@media (min-width: 768px) and (max-width: 1023px) {
+	.post-list > .post-card:nth-child(2n)	  { margin-left: -12px; z-index: 2; }
+	.post-list > .post-card:nth-child(n+3)	  { margin-top: -12px; }
+
+	/* remove touching chamfers */
+	.post-list > .post-card:nth-child(2n+1) .card-frame,
+	.post-list > .post-card:nth-child(2n+1).card-frame { --c-right: 0px; }
+	.post-list > .post-card:nth-child(2n) .card-frame,
+	.post-list > .post-card:nth-child(2n).card-frame	   { --c-left: 0px; }
+	.post-list > .post-card:nth-child(n+3) .card-frame,
+	.post-list > .post-card:nth-child(n+3).card-frame	  { --c-top: 0px; }
+
+	/* mild vertical stagger for collage feel */
+	.post-list > .post-card:nth-child(4n+1) { transform: skewX(-8deg) translateY(-4px); }
+	.post-list > .post-card:nth-child(4n+3) { transform: skewX(-8deg) translateY(4px); }
+}
+
+/* Desktop (3 cols): rightward overlaps + row lift; kill interior chamfers */
+@media (min-width: 1024px) {
+	.post-list > .post-card:nth-child(3n+2),
+	.post-list > .post-card:nth-child(3n+3) { margin-left: -14px; }
+	.post-list > .post-card:nth-child(3n+2) { z-index: 2; }
+	.post-list > .post-card:nth-child(3n+3) { z-index: 3; }
+	.post-list > .post-card:nth-child(n+4)	  { margin-top: -14px; }
+
+	/* remove touching chamfers */
+	.post-list > .post-card:nth-child(3n+1) .card-frame,
+	.post-list > .post-card:nth-child(3n+1).card-frame { --c-right: 0px; }
+	.post-list > .post-card:nth-child(3n+2) .card-frame,
+	.post-list > .post-card:nth-child(3n+2).card-frame { --c-left: 0px; --c-right: 0px; }
+	.post-list > .post-card:nth-child(3n+3) .card-frame,
+	.post-list > .post-card:nth-child(3n+3).card-frame { --c-left: 0px; }
+	.post-list > .post-card:nth-child(n+4) .card-frame,
+	.post-list > .post-card:nth-child(n+4).card-frame  { --c-top: 0px; }
+
+	/* soft stagger for collage feel */
+	.post-list > .post-card:nth-child(6n+1) { transform: skewX(-8deg) translateY(-6px); }
+	.post-list > .post-card:nth-child(6n+3) { transform: skewX(-8deg) translateY(6px); }
+	.post-list > .post-card:nth-child(6n+5) { transform: skewX(-8deg) translateY(-3px); }
+}
+
+/* Mobile: restore gaps, no overlap; full chamfers */
+@media (max-width: 767px) {
+	.post-list > .post-card { margin: 0; }
+	.post-card.card-frame { --c-left:12px; --c-right:12px; --c-top:12px; }
+}
+
+/* ACCESSIBILITY */
+.post-card.card-frame:focus-visible { outline: 2px solid var(--color-pink-light,#e8c3d6); outline-offset: 3px; }
