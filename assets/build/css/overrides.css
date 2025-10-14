@@ -651,6 +651,9 @@
 /* Global heading font override */
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading, 'Bebas Neue', ui-sans-serif, system-ui, sans-serif); }
 
+/* Nav: use heading font (Grobe first, Bebas fallback) */
+.nav-link{ font-family: var(--font-heading, 'Grobe Deutschmeister', 'Bebas Neue', ui-sans-serif, system-ui, sans-serif); }
+
 /* Special page heading (Mission, Reviews, Podcasts, Contact) */
 .page-header { padding: 16px; }
 @media (min-width: 768px) { .page-header { padding: 24px; } }
