@@ -718,7 +718,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading, 'Bebas Neue', ui-sans-
 .site-container{max-width:72rem;margin-inline:auto;padding-inline:1rem}
 
 /* --- NEW HERO (simple, no stripes, no stray padding) --- */
-.hero-simple{ display:grid; grid-template-columns: 1fr 2fr; align-items:center; min-height: 33vh; padding-block: 0; gap: clamp(12px, 3vw, 20px); }
+.hero-simple{ display:grid; grid-template-columns: 1fr; align-items:center; min-height: 30vh; padding-block: 0; gap: clamp(8px, 2vw, 16px); }
 .hero-simple .hero-left{ display:flex; align-items:center; justify-content:flex-start; }
 .hero-simple .hero-logo{ display:inline-block; opacity:0; animation: heroFadeIn 480ms ease-out 80ms forwards; }
 .hero-simple .hero-logo img{ display:block; height: clamp(60px, 12vh, 120px); width:auto; }
@@ -730,6 +730,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading, 'Bebas Neue', ui-sans-
 @keyframes heroFadeIn{ from{ opacity:0; transform: scale(.98);} to{ opacity:1; transform: scale(1);} }
 @keyframes heroLineIn{ from{ opacity:0; transform: translateY(8px);} to{ opacity:1; transform: translateY(0);} }
 @media (max-width: 767px){ .hero-simple{ grid-template-columns: 1fr; min-height: 30vh; } .hero-simple .hero-left{ justify-content:center; } .hero-simple .hero-right{ text-align:center; } }
+
+/* Home intro paragraph (between hero and cards) */
+.home-intro{ font-family: Helvetica, Arial, ui-sans-serif, system-ui; font-weight: 700; font-size: clamp(1.05rem, 1.15vw, 1.125rem); margin: 8px 0 12px; color: var(--color-purple-darkest, #654f84); }
 @media (prefers-reduced-motion: reduce){ .hero-simple .hero-logo, .hero-line{ animation: none !important; opacity: 1; transform: none; } }
 
 /* Remove phantom gap under header */
@@ -939,6 +942,10 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
 /* Remove empty band under the header */
 main > :first-child { margin-top: 0; }
 .page, .site-main { display: flow-root; }
+
+/* Tighten page section headers and review entry headers */
+.page-header { padding: 0; }
+.article-header { padding-block: 0; }
 
 /* Tracklist proximity and width */
 .review-trackbox { margin-top: .75rem; max-width: 70ch; }

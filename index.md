@@ -4,11 +4,6 @@ title: Behind The Beat
 ---
 <main id="site-main" class="site-main">
   <section class="site-container hero-simple" aria-labelledby="hero-title">
-    <div class="hero-left">
-      <a href="{{ '/' | relative_url }}" aria-label="Home" class="hero-logo">
-        <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
-      </a>
-    </div>
     <div class="hero-right">
       <h1 id="hero-title" class="hero-line hero-line-1 text-purple-darkest">Welcome to Behind The Beat.</h1>
       <p class="hero-line hero-line-2">Journalism away from algorithmic noise.</p>
@@ -17,6 +12,7 @@ title: Behind The Beat
   </section>
 
   <section class="site-container">
+    <p class="home-intro">We’re just getting started here at Behind The Beat. Feel free to explore around. If you like what you see from our current limited offerings, make sure to subscribe so that you’re the first one to know what’s up.</p>
     <div class="post-list">
       {% assign all = site.reviews | concat: site.podcasts %}
       {% assign sorted = all | sort: 'date' | reverse %}
