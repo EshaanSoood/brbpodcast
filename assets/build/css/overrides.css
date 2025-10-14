@@ -214,6 +214,19 @@
 /* Trapezoid CTA styling alignment */
 .contact-form .actions .btn-trapezoid { display: inline-block; }
 .contact-form .actions .btn-action { display: inline-block; }
+/* One-column card styling for form */
+.contact-form { background: var(--color-background-offwhite, #faf8f5); border: 2px solid var(--color-pink-light, #e8c3d6); border-radius: 14px; padding: 16px; }
+/* Required indicators */
+.contact-form label:has(+ input[required])::after,
+.contact-form label:has(+ textarea[required])::after { content: " *"; color: var(--color-pink-light, #e8c3d6); }
+/* Error/success states */
+.contact-form input[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"],
+.contact-form input:required:invalid,
+.contact-form textarea:required:invalid { border-color: #cc6aa7; box-shadow: 0 0 0 3px color-mix(in srgb, #cc6aa7 35%, transparent); }
+.contact-form .form-status { margin-top: 8px; font-weight: 700; }
+.contact-form .form-status.error { color: #cc6aa7; }
+.contact-form .form-status.success { color: var(--color-purple-darkest, #654f84); }
 /* Prefer reduced motion globally for interactive elements */
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
