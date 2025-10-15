@@ -1,0 +1,17 @@
+:root{
+  /* Keep brand variables minimal; Tailwind config will read from these */
+  --font-brand: 'GrobeDeutschmeister', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Muted palette from current site (documented; keep your current values) */
+  --color-pink-lightest: #f1dbe6;
+  --color-pink-light: #e8c3d6;
+  --color-purple-dark: #a295b5;
+  --color-purple-darkest: #654f84;
+  --color-background-offwhite: #faf8f5;
+
+  /* Tailwind-compatible tokens (RGB/OKLCH as needed) */
+  --surface: var(--color-background-offwhite);
+  --ink: 25 25 28;
+}
+
