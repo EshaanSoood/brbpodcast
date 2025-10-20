@@ -15,8 +15,8 @@
   </head>
   <body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}">
     <a class="skip-link" href="#site-main">Skip to content</a>
-    {% include nav.html %}
     <div class="site-container">
+      {% include nav.html %}
       {{ content }}
       <div id="footer-sentinel" aria-hidden="true"></div>
       {% include footer.html %}

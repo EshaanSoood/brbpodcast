@@ -1124,3 +1124,11 @@ main > :first-child { margin-top: 0; }
 
 /* ACCESSIBILITY */
 .post-card.card-frame:focus-visible { outline: 2px solid var(--color-pink-light,#e8c3d6); outline-offset: 3px; }
+
+/* --- CONTAINER UNIFICATION (final overrides) --- */
+.site-container{ margin-top: 0; }
+main, .site-main, .page{ display: flow-root; }
+.home .site-main > :first-child,
+.site-main > :first-child,
+.page .site-container > :first-child,
+.mission .site-container > :first-child{ margin-top: 0 !important; padding-top: 0 !important; }
