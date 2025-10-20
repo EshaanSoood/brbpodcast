@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<main id="site-main" class="site-main site-container">
+<main id="site-main" class="site-main">
   <article class="post{% if page.collection == 'reviews' %} review-entry{% endif %}">
     <header class="post-header">
 {% if page.collection == 'reviews' %}
@@ -20,7 +20,7 @@ layout: default
         <figure class="article-figure" data-vt-image>
           {% assign header_cover = page.album_cover | default: page.cover %}
           {% if header_cover %}
-            <img src="{{ header_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" style="view-transition-name: cover-{{ page.url | slugify }}" />
+            <img src="{{ header_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" loading="lazy" decoding="async" style="view-transition-name: cover-{{ page.url | slugify }}" />
           {% endif %}
         </figure>
       </header>
@@ -86,7 +86,7 @@ layout: default
     <figure class="img-frame img-square-s review-cover-mobile" aria-hidden="true">
       {% assign mobile_cover = page.album_cover | default: page.cover %}
       {% if mobile_cover %}
-      <img class="img-media" src="{{ mobile_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" />
+      <img class="img-media" src="{{ mobile_cover | relative_url }}" alt="{{ page.album_cover_alt | default: page.title | append: ' cover' }}" loading="lazy" decoding="async" />
       {% endif %}
     </figure>
     {% endif %}
@@ -116,16 +116,16 @@ layout: default
       <h2 class="stream-title">Stream the album</h2>
       <div class="stream-links" role="list">
         <a class="stream-logo" href="{{ page.stream.spotify | default: '#' }}" aria-label="Listen on Spotify" rel="noopener noreferrer" target="_blank" role="listitem">
-          <img src="/assets/brands/spotify.svg" alt="" />
+          <img src="{{ '/assets/brands/spotify.svg' | relative_url }}" alt="" />
         </a>
         <a class="stream-logo" href="{{ page.stream.apple | default: '#' }}" aria-label="Listen on Apple Music" rel="noopener noreferrer" target="_blank" role="listitem">
-          <img src="/assets/brands/apple-music.svg" alt="" />
+          <img src="{{ '/assets/brands/apple-music.svg' | relative_url }}" alt="" />
         </a>
         <a class="stream-logo" href="{{ page.stream.youtube | default: '#' }}" aria-label="Listen on YouTube Music" rel="noopener noreferrer" target="_blank" role="listitem">
-          <img src="/assets/brands/youtube-music.svg" alt="" />
+          <img src="{{ '/assets/brands/youtube-music.svg' | relative_url }}" alt="" />
         </a>
         <a class="stream-logo" href="{{ page.stream.bandcamp | default: '#' }}" aria-label="Listen on Bandcamp" rel="noopener noreferrer" target="_blank" role="listitem">
-          <img src="/assets/brands/bandcamp.svg" alt="" />
+          <img src="{{ '/assets/brands/bandcamp.svg' | relative_url }}" alt="" />
         </a>
       </div>
     </section>

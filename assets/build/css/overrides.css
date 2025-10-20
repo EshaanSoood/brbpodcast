@@ -656,11 +656,11 @@ html, body { margin: 0; padding: 0; }
 /* Ensure "special" heading treatments are only for page headings.
    Regular headings in review/podcast content should be plain but branded. */
 @font-face {
-	font-family: 'Grobe Deutschmeister';
-	src: url('../fonts/GrobeDeutschmeister.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
+    font-family: 'Grobe Deutschmeister';
+    src: url('../../fonts/GrobeDeutschmeister.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 :root { --font-heading: 'Grobe Deutschmeister', 'Bebas Neue', ui-sans-serif, system-ui, sans-serif; }
