@@ -151,7 +151,7 @@ html, body { margin: 0; padding: 0; }
 /* Unified top band (mobile) */
 @media (max-width: 767px) {
   .site-header .top-band { position: relative; background: var(--color-background-offwhite, #faf8f5); }
-  .site-header .top-row { position: sticky; top: 0; z-index: 50; background: inherit; }
+  .site-header .top-row { position: sticky; top: 0; z-index: 50; background: inherit; padding-bottom: 12px; }
   .site-header .top-row.released { position: static; }
   .site-header .tagline-row { background: inherit; border-top: 1px solid rgba(101,79,132,0.12); }
   .site-header .tagline-row { display: none !important; }
@@ -172,7 +172,7 @@ html, body { margin: 0; padding: 0; }
 
 @media (min-width: 768px) {
   /* Desktop sticky nav/logo only; hero is not sticky */
-  .site-header .desktop-row { position: sticky; top: 0; z-index: 40; background: var(--color-background-offwhite, #faf8f5); }
+  .site-header .desktop-row { position: sticky; top: 0; z-index: 90; background: var(--color-background-offwhite, #faf8f5); padding-bottom: 12px; }
 }
 
 /* Top band height target: ~25vh with floor/ceiling */
@@ -994,12 +994,12 @@ main > :first-child { margin-top: 0; }
 
 /* 2 cols: tablet (overlap on) */
 @media (min-width: 768px) and (max-width: 1023px) {
-	.post-list { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0; }
+	.post-list { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
 }
 
 /* 3 cols: desktop (overlap on) */
 @media (min-width: 1024px) {
-	.post-list { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; }
+	.post-list { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
 }
 
 /* CARD BASE */
@@ -1021,14 +1021,14 @@ main > :first-child { margin-top: 0; }
 		0% calc(100% - var(--c-bottom)), 0% var(--c-top)
 	);
 
-	/* playful tilt */
-	--card-angle: -8deg;
-	transform: skewX(var(--card-angle));
-	transition: transform 140ms ease, box-shadow 140ms ease;
+	/* remove tilt */
+	--card-angle: 0deg;
+	transform: none;
+	transition: box-shadow 140ms ease;
 }
 .post-card.card-frame:hover,
 .post-card.card-frame:focus-visible {
-	transform: skewX(var(--card-angle)) translateY(-2px);
+	transform: none;
 	box-shadow: 0 8px 22px rgba(101,79,132,.18);
 	outline: none;
 }
@@ -1076,45 +1076,60 @@ main > :first-child { margin-top: 0; }
 /* OVERLAP LOGIC + STAGGER */
 /* Tablet (2 cols): gentle right-overlap + row lift; kill interior chamfers */
 @media (min-width: 768px) and (max-width: 1023px) {
-	.post-list > .post-card:nth-child(2n)	  { margin-left: -12px; z-index: 2; }
-	.post-list > .post-card:nth-child(n+3)	  { margin-top: -12px; }
+	.post-list > .post-card:nth-child(2n)	  { margin-left: 0; z-index: 1; }
+	.post-list > .post-card:nth-child(n+3)	  { margin-top: 0; }
 
-	/* remove touching chamfers */
+	/* keep full chamfers now that overlap is removed */
 	.post-list > .post-card:nth-child(2n+1) .card-frame,
-	.post-list > .post-card:nth-child(2n+1).card-frame { --c-right: 0px; }
+	.post-list > .post-card:nth-child(2n+1).card-frame { --c-right: 12px; }
 	.post-list > .post-card:nth-child(2n) .card-frame,
-	.post-list > .post-card:nth-child(2n).card-frame	   { --c-left: 0px; }
+	.post-list > .post-card:nth-child(2n).card-frame	   { --c-left: 12px; }
 	.post-list > .post-card:nth-child(n+3) .card-frame,
-	.post-list > .post-card:nth-child(n+3).card-frame	  { --c-top: 0px; }
+	.post-list > .post-card:nth-child(n+3).card-frame	  { --c-top: 12px; }
 
-	/* mild vertical stagger for collage feel */
-	.post-list > .post-card:nth-child(4n+1) { transform: skewX(-8deg) translateY(-4px); }
-	.post-list > .post-card:nth-child(4n+3) { transform: skewX(-8deg) translateY(4px); }
+	/* remove stagger */
+	.post-list > .post-card:nth-child(4n+1) { transform: none; }
+	.post-list > .post-card:nth-child(4n+3) { transform: none; }
 }
 
 /* Desktop (3 cols): rightward overlaps + row lift; kill interior chamfers */
 @media (min-width: 1024px) {
 	.post-list > .post-card:nth-child(3n+2),
-	.post-list > .post-card:nth-child(3n+3) { margin-left: -14px; }
-	.post-list > .post-card:nth-child(3n+2) { z-index: 2; }
-	.post-list > .post-card:nth-child(3n+3) { z-index: 3; }
-	.post-list > .post-card:nth-child(n+4)	  { margin-top: -14px; }
+	.post-list > .post-card:nth-child(3n+3) { margin-left: 0; }
+	.post-list > .post-card:nth-child(3n+2) { z-index: 1; }
+	.post-list > .post-card:nth-child(3n+3) { z-index: 1; }
+	.post-list > .post-card:nth-child(n+4)	  { margin-top: 0; }
 
-	/* remove touching chamfers */
+	/* keep full chamfers now that overlap is removed */
 	.post-list > .post-card:nth-child(3n+1) .card-frame,
-	.post-list > .post-card:nth-child(3n+1).card-frame { --c-right: 0px; }
+	.post-list > .post-card:nth-child(3n+1).card-frame { --c-right: 12px; }
 	.post-list > .post-card:nth-child(3n+2) .card-frame,
-	.post-list > .post-card:nth-child(3n+2).card-frame { --c-left: 0px; --c-right: 0px; }
+	.post-list > .post-card:nth-child(3n+2).card-frame { --c-left: 12px; --c-right: 12px; }
 	.post-list > .post-card:nth-child(3n+3) .card-frame,
-	.post-list > .post-card:nth-child(3n+3).card-frame { --c-left: 0px; }
+	.post-list > .post-card:nth-child(3n+3).card-frame { --c-left: 12px; }
 	.post-list > .post-card:nth-child(n+4) .card-frame,
-	.post-list > .post-card:nth-child(n+4).card-frame  { --c-top: 0px; }
+	.post-list > .post-card:nth-child(n+4).card-frame  { --c-top: 12px; }
 
-	/* soft stagger for collage feel */
-	.post-list > .post-card:nth-child(6n+1) { transform: skewX(-8deg) translateY(-6px); }
-	.post-list > .post-card:nth-child(6n+3) { transform: skewX(-8deg) translateY(6px); }
-	.post-list > .post-card:nth-child(6n+5) { transform: skewX(-8deg) translateY(-3px); }
+	/* remove stagger */
+	.post-list > .post-card:nth-child(6n+1) { transform: none; }
+	.post-list > .post-card:nth-child(6n+3) { transform: none; }
+	.post-list > .post-card:nth-child(6n+5) { transform: none; }
 }
+
+/* --- FINAL ALIGNMENT OVERRIDES: kill any residual skew/overlap from base CSS --- */
+/* Neutralize mobile-forced skew from base build */
+@media (max-width: 767px) {
+	.post-list > .post-card { transform: none !important; }
+}
+
+/* Neutralize angle classes from base build */
+.card-angle-9, .card-angle-11, .card-angle-13, .card-angle-16 { --card-angle: 0deg !important; transform: none !important; }
+
+/* Ensure consistent gaps across breakpoints */
+.post-list { gap: 16px !important; }
+
+/* Ensure no negative overlaps anywhere */
+.post-list > .post-card { margin-left: 0 !important; margin-top: 0 !important; }
 
 /* Mobile: restore gaps, no overlap; full chamfers */
 @media (max-width: 767px) {

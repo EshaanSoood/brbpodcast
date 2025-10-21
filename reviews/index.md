@@ -3,7 +3,7 @@ layout: default
 title: Reviews
 permalink: /reviews/
 ---
-<main id="site-main" class="site-main site-container">
+<main id="site-main" class="site-main">
   <header class="page-header">
     <div class="page-title-stack page-title-bg" data-title="Reviews">
       <h1 class="page-title">Reviews</h1>
