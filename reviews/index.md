@@ -26,10 +26,8 @@ permalink: /reviews/
       </a>
     {% endfor %}
   </div>
-  {% if total > 10 %}
-  <nav class="pager">
-    <a class="pager-next" href="{{ '/reviews/page/2/' | relative_url }}">Older reviews →</a>
-  </nav>
-  {% endif %}
+  {%- comment -%}
+  Pagination disabled for now. GitHub Pages does not generate page/2 without a plugin.
+  {%- endcomment -%}
 </main>
 
