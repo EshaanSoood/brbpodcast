@@ -1044,6 +1044,53 @@ main > :first-child { margin-top: 0; }
 .post-card .card-media { position: relative; width: 100%; aspect-ratio: 4/5; margin-bottom: 12px; clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px); }
 .post-card .card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
+/* === Postcard 4-row grid layout === */
+.card-grid{
+	display: grid;
+	grid-template-rows: auto auto 1fr auto; /* title, meta, content flex, CTA */
+	align-items: start;
+	justify-items: stretch;
+	gap: 8px;
+	text-align: left; /* left-align all text */
+}
+/* Headline: max 2 lines, auto-fit size */
+.card-headline{
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* responsive sizing already via heading font + container */
+}
+/* Date meta under headline */
+.card-meta{ align-self: start; }
+
+/* Content row: quote left, image right */
+.card-row{
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 12px;
+	align-items: center; /* vertically center image against quote block */
+}
+.card-quote{ margin: 0; }
+.card-media{ justify-self: end; }
+
+/* CTA: center and baseline align across cards */
+.card-actions{
+	align-self: end;   /* pin CTA row to bottom of grid */
+	justify-self: center; /* center horizontally */
+}
+/* Ensure buttons share baseline across different content heights */
+.post-card.card-frame{ grid-template-rows: unset; } /* keep card-grid controlling rows */
+
+@media (min-width: 900px){
+	.card-grid{ gap: 10px; }
+}
+
+@media (max-width: 899px){
+	.card-row{ grid-template-columns: 1fr auto; }
+}
+
 /* --- CONTAINER UNIFICATION (final overrides) --- */
 .site-container{ margin-top: 0; }
 main, .site-main, .page{ display: flow-root; }
@@ -1051,3 +1098,13 @@ main, .site-main, .page{ display: flow-root; }
 .site-main > :first-child,
 .page .site-container > :first-child,
 .mission .site-container > :first-child{ margin-top: 0 !important; padding-top: 0 !important; }
+
+/* --- FOOTER: Two-row layout --- */
+.site-footer-inner{ display: grid; gap: 10px; }
+.footer-top{ display: flex; justify-content: center; }
+.footer-bottom{ display: grid; gap: 6px; justify-items: center; }
+.site-footer .footer-legal{ display: grid; gap: 6px; justify-items: center; }
+@media (min-width: 768px){
+	.site-footer-inner{ gap: 12px; }
+	.footer-bottom{ grid-auto-flow: row; }
+}
