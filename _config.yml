@@ -31,6 +31,7 @@ exclude:
   - node_modules
   - theme.zip
   - README.md
+  - PROJECT_BRIEF.md
   - .DS_Store
   - __MACOSX
   - .bundle

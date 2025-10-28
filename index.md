@@ -17,7 +17,7 @@ title: Behind The Beat
       {% for item in sorted %}
       {% if item.collection == 'reviews' %}
       <a class="card" href="{{ item.url | relative_url }}" data-vt-link data-vt-name="{{ item.url | slugify }}">
-        <div class="card-internal-grid">
+        <div class="card-grid">
           <h2 class="card-headline" data-vt-title style="view-transition-name: title-{{ item.url | slugify }}">{{ item.title }}</h2>
           <div class="card-meta">{{ item.date | date: '%B %e, %Y' }}</div>
           <div class="card-row">
@@ -33,7 +33,7 @@ title: Behind The Beat
       </a>
       {% else %}
       <a class="card" href="{{ item.url | relative_url }}" data-vt-link data-vt-name="{{ item.url | slugify }}">
-        <div class="card-internal-grid">
+        <div class="card-grid">
           <h2 class="card-headline" data-vt-title style="view-transition-name: title-{{ item.url | slugify }}">{{ item.title }}</h2>
           <div class="card-meta">{{ item.date | date: '%B %e, %Y' }}</div>
           <div class="card-row">

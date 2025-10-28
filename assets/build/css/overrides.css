@@ -163,9 +163,6 @@ html, body {
     0 2px 6px rgba(101, 79, 132, 0.08),
     0 8px 24px rgba(162, 149, 181, 0.18),
     inset 0 0 0 1px rgba(241, 219, 230, 0.5) !important;
-}
-
-.card:hover {
   outline: none !important;
 }
 
@@ -178,7 +175,7 @@ html, body {
    CARD INTERNAL GRID & ALIGNMENT
    ========================================================================== */
 
-.card-internal-grid {
+.card-grid {
   display: grid !important;
   grid-template-rows: auto auto 1fr auto !important;
   gap: var(--spacing-sm) !important;
