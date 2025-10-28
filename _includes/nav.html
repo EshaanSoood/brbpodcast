@@ -1,30 +1,30 @@
 <header class="site-header" role="banner">
-  <div class="hidden md:flex items-center gap-[var(--nav-spacing)] py-2 text-purple-darkest desktop-row brand-bar">
-    <a href="{{ '/' | relative_url }}" class="flex items-center logo-spotlight" aria-label="Home">
-      <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" class="h-[var(--nav-height)] w-auto" />
+  <div class="hidden-mobile desktop-row">
+    <a href="{{ '/' | relative_url }}" class="site-logo" aria-label="Home">
+      <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
     </a>
-    <nav aria-label="Primary" class="brand-row nav">
-      <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" style="--item-skew: var(--nav-skew-1);" data-vt-link>Home</a>
-      <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" style="--item-skew: var(--nav-skew-2);" data-vt-link>Mission</a>
-      <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" style="--item-skew: var(--nav-skew-3);" data-vt-link>Reviews</a>
-      <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" style="--item-skew: var(--nav-skew-4);" data-vt-link>Podcasts</a>
-      <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" style="--item-skew: var(--nav-skew-5);" data-vt-link>Contact</a>
-      <a href="#" class="btn-trapezoid" data-subscribe-open>Subscribe</a>
-      <span class="nav-loading" aria-hidden="true"></span>
+    <nav aria-label="Primary" class="nav-row">
+      <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" data-vt-link>Home</a>
+      <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" data-vt-link>Mission</a>
+      <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" data-vt-link>Reviews</a>
+      <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" data-vt-link>Podcasts</a>
+      <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" data-vt-link>Contact</a>
+      <a href="#" class="btn btn-primary" data-subscribe-open>Subscribe</a>
     </nav>
-  <div class="md:hidden top-band text-purple-darkest brand-bar">
-    <div class="top-row flex items-center justify-between py-2">
-      <a href="{{ '/' | relative_url }}" class="flex items-center logo-spotlight" aria-label="Home">
-        <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" class="h-[var(--nav-mobile-height)] w-auto logo-mobile" />
+  </div>
+  <div class="visible-mobile top-band">
+    <div class="top-row flex items-center justify-between">
+      <a href="{{ '/' | relative_url }}" class="site-logo" aria-label="Home">
+        <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
       </a>
       <details class="mobile-nav">
         <summary class="hamburger-btn" role="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">Menu</summary>
-        <nav id="primary-nav" aria-label="Primary" class="nav brand-row flex flex-col gap-[var(--nav-spacing-mobile)] mt-2">
-          <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" style="--item-skew: var(--nav-skew-1);" data-vt-link>Home</a>
-          <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" style="--item-skew: var(--nav-skew-2);" data-vt-link>Mission</a>
-          <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" style="--item-skew: var(--nav-skew-3);" data-vt-link>Reviews</a>
-          <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" style="--item-skew: var(--nav-skew-4);" data-vt-link>Podcasts</a>
-          <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" style="--item-skew: var(--nav-skew-5);" data-vt-link>Contact</a>
+        <nav id="primary-nav" aria-label="Primary" class="nav-col">
+          <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" data-vt-link>Home</a>
+          <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" data-vt-link>Mission</a>
+          <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" data-vt-link>Reviews</a>
+          <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" data-vt-link>Podcasts</a>
+          <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" data-vt-link>Contact</a>
         </nav>
       </details>
     </div>
