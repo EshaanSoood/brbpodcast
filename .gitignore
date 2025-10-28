@@ -30,3 +30,4 @@ Thumbs.db
 # Build artifacts
 node_modules/
 *.log
+
