@@ -46,6 +46,24 @@ html, body {
   line-height: 1.6;
 }
 
+/* Watermark background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background-image: url("../images/btb-logo-clean.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.08;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
 /* ========================================================================== 
    HERO SECTION FIX — REMOVE WHITE BAND UNDER HEADER
    ========================================================================== */
@@ -618,7 +636,7 @@ html, body {
    ========================================================================== */
 
 .page-header {
-  margin-bottom: var(--spacing-md) !important;
+  margin-bottom: 0 !important;
 }
 
 .page-title-stack {
