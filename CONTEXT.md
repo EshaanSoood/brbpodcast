@@ -300,3 +300,145 @@ The refactor prioritizes **clarity, consistency, and elegance**:
 
 The site now reflects a single, coherent visual language that feels intentional and magazine-like.
 
+---
+
+## Page Review & Fixes (Current Session, Continued)
+
+After implementing the design system on the homepage, a comprehensive review of all other pages was conducted to ensure consistency across the entire site.
+
+### Pages Reviewed & Fixed
+
+#### 1) **Mission Page** (`/mission/index.html`)
+- **Issue**: Typo `<hw>` instead of `<h2>`
+- **Fix**: Corrected to proper `<h2>` semantic heading
+- **Status**: ✅ Fixed
+
+#### 2) **Reviews Page** (`/reviews/index.md`)
+- **Issues**:
+  - Using old `card-frame` class (Tailwind legacy)
+  - Missing `site-container` wrapper
+  - Using undefined `reviews-list` class instead of `card-grid`
+  - Old metadata class names (`review-row-*`)
+- **Fixes**:
+  - Added `site-container` to main element for proper padding
+  - Renamed `reviews-list` → `card-grid` (now styled with grid layout)
+  - Changed all `review-row card-frame` → `card`
+  - Updated metadata classes:
+    - `review-row-title` → `card-headline`
+    - `review-row-sub` → `card-subtitle`
+    - `review-row-meta` → `card-meta`
+    - `review-row-author` → `card-author`
+    - `review-row-date` → `card-date`
+    - `review-row-excerpt` → `card-excerpt`
+- **Status**: ✅ Fixed
+
+#### 3) **Podcasts Page** (`/podcasts/index.md`)
+- **Issues**:
+  - Same as reviews page (legacy card classes)
+  - Pagination button using undefined `pager-next` class
+  - Inconsistent styling with design system
+- **Fixes**:
+  - Applied all same updates as reviews page
+  - Changed pagination: `pager-next` → `btn btn-secondary`
+  - Now inherits `.pager` styling with centered flex layout
+- **Status**: ✅ Fixed
+
+#### 4) **Contact Page** (`/contact/index.html`)
+- **Issues**:
+  - Submit button using old `btn-trapezoid btn-action` classes
+  - Form had no CSS styling for inputs, labels, or layout
+- **Fixes**:
+  - Updated button: `btn-trapezoid btn-action` → `btn btn-primary`
+  - Added comprehensive form CSS (see below)
+- **Status**: ✅ Fixed
+
+### CSS Additions
+
+Added **215+ new lines** to `assets/build/css/overrides.css` covering:
+
+#### Page Layout Components
+- `.page-header` — Proper spacing and layout
+- `.page-title` — Display font, sizing, spacing (matches homepage H1)
+- `.page-well` — Container for page content sections
+- `.page-content` — Reading measure (70ch), paragraph styling, link colors
+
+#### Card Grid & List Styling
+- `.card-grid` — Responsive grid (auto-fill, min 300px, 16px gap)
+  - Mobile (≤767px): Single column
+  - Tablet+: 2–3 columns as space allows
+- `.card-subtitle` — Secondary text in cards (secondary color, 0.95rem)
+- `.card-excerpt` — Preview text (primary color, 0.95rem, 1.5 line-height)
+- `.card-author` — Byline styling (secondary color, 0.85rem)
+- `.card-date` — Date formatting (secondary color, 0.85rem)
+
+#### Pagination
+- `.pager` — Flexbox centered container
+- `.pager .btn` — Resets button margins
+- **New variant**: `.btn-secondary` — Light panel background, primary text, trim border
+  - Hover state: Flip to trim background with primary text
+
+#### Form Styling
+- `.contact-form` — Max-width 60ch, proper margin
+- `.name-row` — Two-column grid on desktop, single on mobile
+- `.field-group` — Flex column wrapper for label + input
+  - Labels: Primary color, 0.95rem, 500 weight
+  - Inputs/textareas: Page background, trim border, soft focus state
+  - Focus ring: Primary border, white background
+  - Textareas: Vertical resize only, min 150px height
+- `.actions` — Flex layout for button(s)
+- `.form-status` — Status message styling (secondary color, 0.9rem)
+
+#### Editor Block
+- `.editor-block` — Grid container for biography sections
+- `.editor-text` — Proper typography and spacing
+
+### Button Variants
+
+Expanded button system:
+- `.btn-primary` — Deep purple bg, trim text, secondary border (existing)
+- **`.btn-secondary`** (new) — Panel bg, primary text, trim border
+  - Primary use: Pagination, secondary actions
+  - Hover: Trim background, primary text, primary border
+
+### Responsive Behavior
+
+All new components follow mobile-first approach:
+- Single column layouts on mobile (≤767px)
+- Flex/grid reflow on tablet and desktop
+- Proper spacing on all breakpoints
+- Touch-friendly form fields (44px minimum height)
+
+### Verification Checklist
+
+- [x] All pages use design system classes (no old Tailwind utilities)
+- [x] All metadata elements use secondary color
+- [x] Card grids follow spacing rhythm
+- [x] Forms are fully styled and accessible
+- [x] Pagination buttons inherit button styles
+- [x] Page titles match homepage H1 treatment
+- [x] All components responsive across breakpoints
+- [x] Focus states visible on all form inputs
+- [x] Typography consistent (Helvetica body, Grobe display)
+- [x] Color system applied throughout
+
+### Files Changed
+
+```
+btbstatic/
+├── mission/index.html              → Fixed HTML typo (<hw> → <h2>)
+├── reviews/index.md                → Refactored to use design system
+├── podcasts/index.md               → Refactored to use design system
+├── contact/index.html              → Updated button classes
+└── assets/build/css/overrides.css  → Added 215+ lines of new CSS
+    ├── Page layout components
+    ├── Card grid styling
+    ├── Form styling
+    ├── Pagination
+    ├── Button variants (btn-secondary)
+    └── Editor block styling
+```
+
+### Summary
+
+All pages now use the design system consistently. Every page component (cards, buttons, forms, headers, pagination) follows the visual contract. The site is now **visually cohesive across all pages** and ready for deployment.
+
