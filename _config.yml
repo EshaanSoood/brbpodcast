@@ -35,5 +35,6 @@ exclude:
   - .DS_Store
   - __MACOSX
   - .bundle
+  - vendor
   - .git
 
