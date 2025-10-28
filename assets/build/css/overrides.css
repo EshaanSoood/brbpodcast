@@ -618,7 +618,7 @@ html, body {
    ========================================================================== */
 
 .page-header {
-  margin-bottom: var(--spacing-2xl) !important;
+  margin-bottom: var(--spacing-md) !important;
 }
 
 .page-title-stack {
@@ -729,6 +729,11 @@ html, body {
 .contact-form {
   max-width: 60ch !important;
   margin-top: var(--spacing-2xl) !important;
+  background: var(--color-panel) !important;
+  padding: var(--spacing-lg) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(101, 79, 132, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(101, 79, 132, 0.05) !important;
 }
 
 .name-row {
@@ -766,16 +771,17 @@ html, body {
   color: var(--color-primary) !important;
   background-color: var(--color-page) !important;
   border: 1px solid var(--color-trim) !important;
-  border-radius: 0 !important;
+  border-radius: 4px !important;
   padding: var(--spacing-sm) var(--spacing-md) !important;
-  transition: border-color 0.2s ease, background-color 0.2s ease !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .field-group input:focus,
 .field-group textarea:focus {
   outline: none !important;
-  border-color: var(--color-primary) !important;
+  border-color: var(--color-accent) !important;
   background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(162, 149, 181, 0.1) !important;
 }
 
 .field-group textarea {
