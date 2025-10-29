@@ -16,7 +16,7 @@
 /* COLOR SYSTEM */
 :root {
   --color-page: #FAF8F5;        /* Page background - warm off-white */
-  --color-panel: #F9F4FA;       /* Card surfaces - blush ivory */
+  --color-panel: #F5EBF3;       /* Card surfaces - warmer blush-ivory with more pink saturation */
   --color-primary: #654F84;     /* Primary text & CTAs - deep purple */
   --color-secondary: #A295B5;   /* Secondary text - lighter purple */
   --color-trim: #E8C3D6;        /* Accents & borders - light pink */
@@ -246,6 +246,7 @@ body::before {
   color: var(--color-primary) !important;
   margin: 0 !important;
   line-height: 1.3 !important;
+  min-height: 2.6em !important;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
@@ -263,6 +264,7 @@ body::before {
   font-weight: 400 !important;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  min-height: 1.2em !important;
 }
 
 .card-subtitle {
@@ -408,6 +410,7 @@ body::before {
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
+  height: 44px !important;
   min-height: 44px !important;
   clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px) !important;
   transition: transform 120ms ease, background-color 120ms ease, color 120ms ease, border-color 120ms ease !important;
@@ -480,7 +483,6 @@ body::before {
   transition: all 200ms ease !important;
   background: transparent !important;
   border: none !important;
-  clip-path: polygon(8px 0%, calc(100% - 12px) 0%, 100% 100%, 12px 100%) !important;
   margin: 0 2px !important;
 }
 
@@ -500,28 +502,21 @@ body::before {
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: var(--color-primary) !important;
-  color: var(--color-trim) !important;
+  background: transparent !important;
+  color: var(--color-primary) !important;
   outline: none !important;
   transform: translateY(-2px) !important;
-  border-radius: 0 !important;
+  border-bottom: 2px solid var(--color-accent) !important;
 }
 
 .nav-link.is-active {
-  background: var(--color-primary) !important;
-  color: var(--color-trim) !important;
+  background: transparent !important;
+  color: var(--color-primary) !important;
+  border-bottom: 2px solid var(--color-primary) !important;
 }
 
 .nav-link.is-active::after {
-  content: "";
-  position: absolute !important;
-  bottom: 4px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 12px !important;
-  height: 12px !important;
-  background: rgba(162, 149, 181, 0.4) !important;
-  clip-path: polygon(0% 0%, 100% 20%, 100% 100%, 0% 80%) !important;
+  display: none !important;
 }
 
 /* ========================================================================== 
@@ -565,7 +560,7 @@ body::before {
   align-items: center !important;
   gap: var(--spacing-lg) !important;
   padding: var(--spacing-md) var(--spacing-lg) !important;
-  background: rgba(0, 0, 0, 0.05) !important;
+  background: var(--color-trim) !important;
   flex-wrap: wrap !important;
 }
 
@@ -769,7 +764,6 @@ body::before {
   transition: all 200ms ease !important;
   background: transparent !important;
   border: none !important;
-  clip-path: polygon(8px 0%, calc(100% - 12px) 0%, 100% 100%, 12px 100%) !important;
   margin: 0 2px !important;
 }
 
@@ -789,27 +783,21 @@ body::before {
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: var(--color-primary) !important;
-  color: var(--color-trim) !important;
+  background: transparent !important;
+  color: var(--color-primary) !important;
   outline: none !important;
   transform: translateY(-2px) !important;
+  border-bottom: 2px solid var(--color-accent) !important;
 }
 
 .nav-link.is-active {
-  background: var(--color-primary) !important;
-  color: var(--color-trim) !important;
+  background: transparent !important;
+  color: var(--color-primary) !important;
+  border-bottom: 2px solid var(--color-primary) !important;
 }
 
 .nav-link.is-active::after {
-  content: "";
-  position: absolute !important;
-  bottom: 4px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 12px !important;
-  height: 12px !important;
-  background: rgba(162, 149, 181, 0.4) !important;
-  clip-path: polygon(0% 0%, 100% 20%, 100% 100%, 0% 80%) !important;
+  display: none !important;
 }
 
 /* ========================================================================== 
@@ -843,7 +831,7 @@ body::before {
   align-items: center !important;
   justify-content: center !important;
   text-align: center !important;
-  padding: var(--spacing-2xl) var(--spacing-lg) !important;
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) !important;
   background: var(--color-page) !important;
   position: relative !important;
   min-height: 200px !important;
