@@ -111,6 +111,10 @@ body::before {
   letter-spacing: -0.01em;
   position: relative;
   padding-bottom: var(--spacing-sm);
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Delicate editorial underline for H1 */
@@ -135,7 +139,7 @@ body::before {
   font-size: 1.05rem !important;
   color: var(--color-primary) !important;
   max-width: 70ch;
-  margin: var(--spacing-lg) 0 var(--spacing-2xl) 0 !important;
+  margin: var(--spacing-lg) 0 var(--spacing-lg) 0 !important;
   line-height: 1.6;
 }
 
