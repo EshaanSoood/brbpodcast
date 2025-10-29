@@ -542,7 +542,7 @@ body::before {
   max-width: 100% !important;
 }
 
-.footer-top {
+.footer-main {
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
@@ -550,11 +550,12 @@ body::before {
   border-bottom: 1px solid var(--color-accent) !important;
   min-height: 72px !important;
   flex-wrap: nowrap !important;
-  gap: 0 !important;
+  gap: var(--spacing-md) !important;
   width: 100% !important;
+  background: var(--color-trim) !important;
 }
 
-.footer-bottom {
+.footer-legal {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -562,22 +563,14 @@ body::before {
   padding: var(--spacing-md) var(--spacing-lg) !important;
   background: var(--color-trim) !important;
   flex-wrap: wrap !important;
+  width: 100% !important;
 }
 
 .footer-legal p {
   margin: 0 !important;
-  font-size: 0.8rem !important;
+  font-size: 0.75rem !important;
   color: var(--color-primary) !important;
   text-align: center !important;
-}
-
-.footer-legal {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  flex-direction: column !important;
-  gap: var(--spacing-sm) !important;
-  width: 100% !important;
 }
 
 .footer-credit {
@@ -589,10 +582,9 @@ body::before {
 .social-row {
   display: flex !important;
   gap: var(--spacing-md) !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   flex-wrap: wrap !important;
   margin: 0 !important;
-  order: -1 !important;
 }
 
 .social-link {
@@ -617,21 +609,20 @@ body::before {
 }
 
 /* Footer nav links styled like header */
-.footer-top .nav-link {
+.footer-main .nav-link {
   color: var(--color-primary) !important;
   padding: 24px 16px !important;
   font-size: 0.85rem !important;
   min-height: 72px !important;
   background: transparent !important;
   border: none !important;
-  clip-path: polygon(6px 0%, calc(100% - 10px) 0%, 100% 100%, 10px 100%) !important;
   margin: 0 1px !important;
   flex-grow: 0 !important;
   white-space: nowrap !important;
 }
 
-.footer-top .nav-link:hover,
-.footer-top .nav-link:focus-visible {
+.footer-main .nav-link:hover,
+.footer-main .nav-link:focus-visible {
   background: var(--color-primary) !important;
   color: var(--color-trim) !important;
 }
