@@ -172,7 +172,7 @@ body::before {
 
 .card {
   background: var(--color-panel) !important;
-  border: 1px solid rgba(101, 79, 132, 0.08) !important;
+  border: 1px solid rgba(101, 79, 132, 0.12) !important;
   border-radius: 12px !important;
   padding: var(--spacing-md) !important;
   /* Soft purple lift shadow */
@@ -187,6 +187,8 @@ body::before {
   color: inherit !important;
   aspect-ratio: auto !important;
   min-height: 100%;
+  height: 100% !important;
+  align-items: stretch !important;
 }
 
 .card:hover,
@@ -231,7 +233,7 @@ body::before {
   gap: var(--spacing-sm) !important;
   align-items: start !important;
   width: 100% !important;
-  height: 100%;
+  height: 100% !important;
 }
 
 /* ========================================================================== 
@@ -474,16 +476,17 @@ body::before {
   letter-spacing: 0.04em !important;
   color: var(--color-primary) !important;
   text-decoration: none !important;
-  padding: 24px 18px !important;
+  padding: 18px 18px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 72px !important;
+  min-height: 54px !important;
   position: relative !important;
   transition: all 200ms ease !important;
   background: transparent !important;
   border: none !important;
   margin: 0 2px !important;
+  outline: none !important;
 }
 
 /* Light purple divider between nav links */
@@ -494,7 +497,7 @@ body::before {
   top: 50% !important;
   transform: translateY(-50%) !important;
   width: 2px !important;
-  height: 40px !important;
+  height: 30px !important;
   background: var(--color-accent) !important;
   opacity: 0.6 !important;
   clip-path: polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%) !important;
@@ -547,8 +550,8 @@ body::before {
   justify-content: flex-start !important;
   align-items: center !important;
   padding: 0 var(--spacing-lg) !important;
-  border-bottom: 1px solid var(--color-accent) !important;
-  min-height: 72px !important;
+  border-bottom: none !important;
+  min-height: 54px !important;
   flex-wrap: nowrap !important;
   gap: var(--spacing-md) !important;
   width: 100% !important;
@@ -560,7 +563,7 @@ body::before {
   justify-content: center !important;
   align-items: center !important;
   gap: var(--spacing-lg) !important;
-  padding: var(--spacing-md) var(--spacing-lg) !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
   background: var(--color-trim) !important;
   flex-wrap: wrap !important;
   width: 100% !important;
@@ -611,20 +614,22 @@ body::before {
 /* Footer nav links styled like header */
 .footer-main .nav-link {
   color: var(--color-primary) !important;
-  padding: 24px 16px !important;
+  padding: 18px 16px !important;
   font-size: 0.85rem !important;
-  min-height: 72px !important;
+  min-height: 54px !important;
   background: transparent !important;
   border: none !important;
   margin: 0 1px !important;
   flex-grow: 0 !important;
   white-space: nowrap !important;
+  outline: none !important;
 }
 
 .footer-main .nav-link:hover,
 .footer-main .nav-link:focus-visible {
   background: var(--color-primary) !important;
   color: var(--color-trim) !important;
+  border-bottom: 2px solid var(--color-primary) !important;
 }
 
 /* ========================================================================== 
@@ -707,7 +712,7 @@ body::before {
   border-bottom: none !important;
   display: flex !important;
   align-items: center !important;
-  min-height: 72px !important;
+  min-height: 54px !important;
   background-image: 
     url("../images/btb-logo-clean.png"),
     linear-gradient(135deg, var(--color-trim) 0%, var(--color-trim) 100%);
@@ -746,16 +751,17 @@ body::before {
   letter-spacing: 0.04em !important;
   color: var(--color-primary) !important;
   text-decoration: none !important;
-  padding: 24px 18px !important;
+  padding: 18px 18px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 72px !important;
+  min-height: 54px !important;
   position: relative !important;
   transition: all 200ms ease !important;
   background: transparent !important;
   border: none !important;
   margin: 0 2px !important;
+  outline: none !important;
 }
 
 /* Light purple divider between nav links */
@@ -766,7 +772,7 @@ body::before {
   top: 50% !important;
   transform: translateY(-50%) !important;
   width: 2px !important;
-  height: 40px !important;
+  height: 30px !important;
   background: var(--color-accent) !important;
   opacity: 0.6 !important;
   clip-path: polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%) !important;
@@ -944,6 +950,7 @@ body::before {
   grid-template-columns: repeat(2, 1fr) !important;
   gap: var(--spacing-lg) !important;
   margin-bottom: var(--spacing-2xl) !important;
+  grid-auto-rows: 1fr !important;
 }
 
 @media (max-width: 767px) {
