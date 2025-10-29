@@ -469,7 +469,7 @@ body::before {
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
-  color: var(--color-trim) !important;
+  color: var(--color-primary) !important;
   text-decoration: none !important;
   padding: 24px 18px !important;
   display: inline-flex !important;
@@ -484,7 +484,7 @@ body::before {
   margin: 0 2px !important;
 }
 
-/* Light pink divider between nav links */
+/* Light purple divider between nav links */
 .nav-link:not(:first-child)::before {
   content: "";
   position: absolute !important;
@@ -493,23 +493,23 @@ body::before {
   transform: translateY(-50%) !important;
   width: 2px !important;
   height: 40px !important;
-  background: var(--color-trim) !important;
+  background: var(--color-accent) !important;
   opacity: 0.6 !important;
   clip-path: polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%) !important;
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: var(--color-trim) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-trim) !important;
   outline: none !important;
   transform: translateY(-2px) !important;
   border-radius: 0 !important;
 }
 
 .nav-link.is-active {
-  background: var(--color-trim) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-trim) !important;
 }
 
 .nav-link.is-active::after {
@@ -529,10 +529,10 @@ body::before {
    ========================================================================== */
 
 .site-footer {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%) !important;
+  background: var(--color-trim) !important;
   margin-top: auto !important;
   padding: 0 !important;
-  border-top: 2px solid var(--color-trim) !important;
+  border-top: 2px solid var(--color-accent) !important;
   text-align: center !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -552,7 +552,7 @@ body::before {
   justify-content: flex-start !important;
   align-items: center !important;
   padding: 0 var(--spacing-lg) !important;
-  border-bottom: 1px solid rgba(232, 195, 214, 0.3) !important;
+  border-bottom: 1px solid var(--color-accent) !important;
   min-height: 72px !important;
   flex-wrap: nowrap !important;
   gap: 0 !important;
@@ -565,14 +565,14 @@ body::before {
   align-items: center !important;
   gap: var(--spacing-lg) !important;
   padding: var(--spacing-md) var(--spacing-lg) !important;
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
   flex-wrap: wrap !important;
 }
 
 .footer-legal p {
   margin: 0 !important;
   font-size: 0.8rem !important;
-  color: rgba(232, 195, 214, 0.8) !important;
+  color: var(--color-primary) !important;
   text-align: center !important;
 }
 
@@ -587,7 +587,7 @@ body::before {
 
 .footer-credit {
   font-size: 0.75rem !important;
-  color: rgba(232, 195, 214, 0.6) !important;
+  color: var(--color-primary) !important;
   text-align: center !important;
 }
 
@@ -607,7 +607,7 @@ body::before {
   width: 40px !important;
   height: 40px !important;
   background: transparent !important;
-  color: var(--color-trim) !important;
+  color: var(--color-primary) !important;
   text-decoration: none !important;
   transition: all 150ms ease !important;
   position: relative !important;
@@ -615,15 +615,15 @@ body::before {
 
 .social-link:hover,
 .social-link:focus-visible {
-  color: var(--color-primary) !important;
-  background: var(--color-trim) !important;
+  color: var(--color-trim) !important;
+  background: var(--color-primary) !important;
   clip-path: polygon(4px 0%, 100% 0%, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0% 100%, 0% 4px) !important;
   outline: none !important;
 }
 
 /* Footer nav links styled like header */
 .footer-top .nav-link {
-  color: var(--color-trim) !important;
+  color: var(--color-primary) !important;
   padding: 24px 16px !important;
   font-size: 0.85rem !important;
   min-height: 72px !important;
@@ -637,8 +637,8 @@ body::before {
 
 .footer-top .nav-link:hover,
 .footer-top .nav-link:focus-visible {
-  background: var(--color-trim) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-trim) !important;
 }
 
 /* ========================================================================== 
@@ -713,7 +713,7 @@ body::before {
 
 /* HEADER */
 .site-header {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%) !important;
+  background: var(--color-trim) !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 90 !important;
@@ -724,7 +724,7 @@ body::before {
   min-height: 72px !important;
   background-image: 
     url("../images/btb-logo-clean.png"),
-    linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
+    linear-gradient(135deg, var(--color-trim) 0%, var(--color-trim) 100%);
   background-repeat: no-repeat, no-repeat;
   background-position: left -20px center, center;
   background-size: 120px auto, cover;
@@ -758,7 +758,7 @@ body::before {
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
-  color: var(--color-trim) !important;
+  color: var(--color-primary) !important;
   text-decoration: none !important;
   padding: 24px 18px !important;
   display: inline-flex !important;
@@ -773,7 +773,7 @@ body::before {
   margin: 0 2px !important;
 }
 
-/* Light pink divider between nav links */
+/* Light purple divider between nav links */
 .nav-link:not(:first-child)::before {
   content: "";
   position: absolute !important;
@@ -782,22 +782,22 @@ body::before {
   transform: translateY(-50%) !important;
   width: 2px !important;
   height: 40px !important;
-  background: var(--color-trim) !important;
+  background: var(--color-accent) !important;
   opacity: 0.6 !important;
   clip-path: polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%) !important;
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: var(--color-trim) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-trim) !important;
   outline: none !important;
   transform: translateY(-2px) !important;
 }
 
 .nav-link.is-active {
-  background: var(--color-trim) !important;
-  color: var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-trim) !important;
 }
 
 .nav-link.is-active::after {
@@ -847,6 +847,8 @@ body::before {
   background: var(--color-page) !important;
   position: relative !important;
   min-height: 200px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .display-heading h1:first-child {
@@ -881,10 +883,14 @@ body::before {
 
 .page-title-stack {
   position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .page-title-bg {
   background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .page-title {
@@ -913,7 +919,9 @@ body::before {
 }
 
 .page-well {
+  margin-top: 0 !important;
   margin-bottom: var(--spacing-2xl) !important;
+  padding-top: 0 !important;
 }
 
 .page-content {
