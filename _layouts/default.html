@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Force GitHub Pages rebuild -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="preload" href="{{ '/assets/fonts/GrobeDeutschmeister.ttf' | relative_url }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ "/assets/images/btb-logo-clean.png" | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ "/assets/images/btb-logo-clean.png" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/build/css/overrides.css" | relative_url }}">
+  </head>
+  <body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}">
+    <a class="skip-link" href="#site-main">Skip to content</a>
+    
+    <!-- SVG Filters -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;">
+      <defs>
+        <filter id="paper-grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" seed="2" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" />
+        </filter>
+      </defs>
+    </svg>
+    
+    <div class="site-container">
+      {% include nav.html %}
+      {{ content }}
+      <div id="footer-sentinel" aria-hidden="true"></div>
+      {% include footer.html %}
+    </div>
+    <script>
+    (function(){
+      var header = document.querySelector('header.site-header .top-row');
+      var sentinel = document.getElementById('footer-sentinel');
+      if(!header || !sentinel) return;
+      // Create sentinel before footer
+      var footer = document.querySelector('footer.site-footer');
+      if(footer && !sentinel.parentNode){ document.body.insertBefore(sentinel, footer); }
+      var released = false;
+      var toggleTimer = null;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(toggleTimer) clearTimeout(toggleTimer);
+          toggleTimer = setTimeout(function(){
+            if(entry.isIntersecting){
+              if(!released){ header.classList.add('released'); released = true; }
+            } else {
+              if(released){ header.classList.remove('released'); released = false; }
+            }
+          }, 60);
+        });
+      }, { rootMargin: '0px 0px -60% 0px' });
+      obs.observe(sentinel);
+    })();
+    </script>
+    <script>
+    (function(){
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var supports = 'startViewTransition' in document;
+      // Fallback fade for browsers without View Transitions or when reduced motion is enabled
+      if(!supports || reduce){
+        document.addEventListener('click', function(e){
+          var a = e.target.closest('[data-vt-link]');
+          if(!a) return;
+          var url = a.getAttribute('href');
+          if(!url) return;
+          e.preventDefault();
+          document.documentElement.classList.add('vt-fade-out');
+          setTimeout(function(){ window.location.href = url; }, 140);
+        }, { capture: true });
+        window.addEventListener('DOMContentLoaded', function(){
+          document.documentElement.classList.add('vt-fade-in');
+          setTimeout(function(){ document.documentElement.classList.remove('vt-fade-in'); }, 240);
+        });
+        return;
+      }
+      var loadingTimer = null;
+      var navLoading = document.querySelector('.nav-loading');
+      function startLoadingIndicator(){
+        if(!navLoading) return;
+        if(loadingTimer) clearTimeout(loadingTimer);
+        loadingTimer = setTimeout(function(){ navLoading.classList.add('is-active'); }, 500);
+      }
+      function stopLoadingIndicator(){
+        if(loadingTimer) clearTimeout(loadingTimer);
+        loadingTimer = null;
+        if(navLoading) navLoading.classList.remove('is-active');
+      }
+      document.addEventListener('click', function(e){
+        var a = e.target.closest('[data-vt-link]');
+        if(!a) return;
+        var url = a.getAttribute('href');
+        if(!url) return;
+        e.preventDefault();
+        startLoadingIndicator();
+        // Keep existing inline view-transition-name values (title-<slug>, cover-<slug>) for shared elements
+        var vt = document.startViewTransition(function(){ window.location.href = url; });
+        vt.finished.finally(stopLoadingIndicator);
+      }, { capture: true });
+      window.addEventListener('DOMContentLoaded', stopLoadingIndicator);
+      window.addEventListener('load', stopLoadingIndicator);
+      window.addEventListener('pageshow', stopLoadingIndicator);
+    })();
+    </script>
+    <script>
+    (function(){
+      var overlay = null;
+      var dialog = null;
+      var lastActive = null;
+      var prevOverflow = '';
+      var openers = document.querySelectorAll('[data-subscribe-open]');
+
+      function ensureOverlay(){
+        if(overlay) return overlay;
+        var tpl = document.createElement('template');
+        tpl.innerHTML = '\n<div class="subscribe-overlay" id="subscribe-overlay" hidden>\n  <div class="subscribe-backdrop" data-subscribe-close aria-hidden="true"></div>\n  <div class="subscribe-dialog" role="dialog" aria-modal="true" aria-labelledby="subscribe-title" tabindex="-1">\n    <button type="button" class="subscribe-close" data-subscribe-close aria-label="Close subscribe form">✕</button>\n    <div id="mc_embed_shell">\n      <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">\n      <div id="mc_embed_signup">\n        <img class="btb-form__logo" src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="Behind The Beat logo">\n        <form action="https://github.us22.list-manage.com/subscribe/post?u=f1b69e21f3230273dacff4ed5&amp;id=9df3622d09&amp;f_id=00e5c2e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>\n          <div id="mc_embed_signup_scroll">\n            <h2 id="subscribe-title">Subscribe</h2>\n            <p class="btb-note">Hey! We hate pop-up forms as much as you, so thank you for choosing to click on the subscribe button. We promise to never spam your inbox, and unsubscribing is sad for us but easy for you.</p>\n            <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>\n            <div class="mc-field-group">\n              <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>\n              <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-FNAME">First Name <span class="asterisk">*</span></label>\n              <input type="text" name="FNAME" class="text" id="mce-FNAME" value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-LNAME">Last Name <span class="asterisk">*</span></label>\n              <input type="text" name="LNAME" class="text" id="mce-LNAME" value="">\n            </div>\n            <div class="mc-field-group">\n              <label for="mce-PHONE">Phone Number</label>\n              <input type="text" name="PHONE" class="REQ_CSS" id="mce-PHONE" value="">\n            </div>\n            <div class="optionalParent">\n              <div class="btb-actions">\n                <span class="btb-trap">\n                  <input type="submit" name="subscribe" id="mc-embedded-subscribe" value="Subscribe" aria-label="Subscribe">\n                </span>\n              </div>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n';
+        overlay = tpl.content.firstElementChild;
+        document.body.appendChild(overlay);
+        dialog = overlay.querySelector('.subscribe-dialog');
+        var closers = overlay.querySelectorAll('[data-subscribe-close]');
+        closers.forEach(function(btn){ btn.addEventListener('click', function(){ close(); }); });
+        // Focus trap
+        overlay.addEventListener('keydown', function(e){
+          if(e.key !== 'Tab') return;
+          var focusables = overlay.querySelectorAll('a[href],button:not([disabled]),textarea,input[type="text"],input[type="email"],input[type="tel"],input[type="submit"],select,[tabindex]:not([tabindex="-1"])');
+          focusables = Array.prototype.slice.call(focusables).filter(function(el){ return el.offsetParent !== null; });
+          if(focusables.length === 0) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if(e.shiftKey){ if(document.activeElement === first){ e.preventDefault(); last.focus(); } }
+          else { if(document.activeElement === last){ e.preventDefault(); first.focus(); } }
+        });
+        return overlay;
+      }
+
+      function open(){
+        ensureOverlay();
+        lastActive = document.activeElement;
+        prevOverflow = document.body.style.overflow;
+        overlay.hidden = false;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        if(dialog){ dialog.focus(); }
+        document.addEventListener('keydown', onKeydown);
+      }
+      function close(){
+        if(!overlay) return;
+        overlay.classList.remove('is-open');
+        overlay.hidden = true;
+        document.body.style.overflow = prevOverflow;
+        document.removeEventListener('keydown', onKeydown);
+        if(lastActive && typeof lastActive.focus === 'function'){ lastActive.focus(); }
+      }
+      function onKeydown(e){ if(e.key === 'Escape'){ close(); } }
+
+      openers.forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
+    })();
+    </script>
+  </body>
+</html>
+

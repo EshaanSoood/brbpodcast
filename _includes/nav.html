@@ -1,0 +1,62 @@
+<header class="site-header" role="banner">
+  <div class="hidden-mobile desktop-row">
+    <a href="{{ '/' | relative_url }}" class="site-logo" aria-label="Home">
+      <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
+    </a>
+    <nav aria-label="Primary" class="nav-row">
+      <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" data-vt-link>Home</a>
+      <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" data-vt-link>Mission</a>
+      <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" data-vt-link>Reviews</a>
+      <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" data-vt-link>Podcasts</a>
+      <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" data-vt-link>Contact</a>
+      <a href="#" class="btn btn-primary" data-subscribe-open>Subscribe</a>
+    </nav>
+  </div>
+  <div class="visible-mobile top-band">
+    <div class="top-row flex items-center justify-between">
+      <a href="{{ '/' | relative_url }}" class="site-logo" aria-label="Home">
+        <img src="{{ '/assets/images/btb-logo-clean.png' | relative_url }}" alt="{{ site.title }}" />
+      </a>
+      <details class="mobile-nav">
+        <summary class="hamburger-btn" role="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">Menu</summary>
+        <nav id="primary-nav" aria-label="Primary" class="nav-col">
+          <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} is-active{% endif %}" aria-current="{% if page.url == '/' %}page{% endif %}" data-vt-link>Home</a>
+          <a href="{{ '/mission/' | relative_url }}" class="nav-link{% if page.url contains '/mission/' %} is-active{% endif %}" aria-current="{% if page.url contains '/mission/' %}page{% endif %}" data-vt-link>Mission</a>
+          <a href="{{ '/reviews/' | relative_url }}" class="nav-link{% if page.url contains '/reviews/' %} is-active{% endif %}" aria-current="{% if page.url contains '/reviews/' %}page{% endif %}" data-vt-link>Reviews</a>
+          <a href="{{ '/podcasts/' | relative_url }}" class="nav-link{% if page.url contains '/podcasts/' %} is-active{% endif %}" aria-current="{% if page.url contains '/podcasts/' %}page{% endif %}" data-vt-link>Podcasts</a>
+          <a href="{{ '/contact/' | relative_url }}" class="nav-link{% if page.url contains '/contact/' %} is-active{% endif %}" aria-current="{% if page.url contains '/contact/' %}page{% endif %}" data-vt-link>Contact</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var details = document.currentScript && document.currentScript.previousElementSibling && document.currentScript.previousElementSibling.previousElementSibling;
+    // Fallback: query within this header
+    if(!details){ details = document.querySelector('header.site-header details.mobile-nav'); }
+    if(!details) return;
+    var summary = details.querySelector('summary.hamburger-btn');
+    var nav = details.querySelector('#primary-nav');
+    if(summary){
+      var sync = function(){ summary.setAttribute('aria-expanded', details.hasAttribute('open') ? 'true' : 'false'); };
+      details.addEventListener('toggle', sync);
+      sync();
+      // Close on Escape
+      details.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ details.removeAttribute('open'); summary.focus(); } });
+      // Move focus to first nav link when opening; return focus to button on close
+      details.addEventListener('toggle', function(){
+        if(details.hasAttribute('open')){
+          var first = nav && nav.querySelector('a'); if(first) first.focus();
+        } else { summary.focus(); }
+      });
+    }
+    if(nav){
+      nav.addEventListener('click', function(e){
+        var t = e.target;
+        if(t && t.tagName === 'A'){ details.removeAttribute('open'); }
+      });
+    }
+  })();
+  </script>
+</header>
+
